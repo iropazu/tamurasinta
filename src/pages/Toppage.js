@@ -2,7 +2,7 @@ import React from 'react'
 
 const Toppage = () => {
   return (
-    <div>Toppage</div>
+    <div><h1>Top</h1></div>
   )
 }
 
