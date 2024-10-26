@@ -1,18 +1,14 @@
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
-import Login from './pages/Login'
-import Toppage from './pages/Toppage'
+import FirestoreTest from "./firebasaeTest/firestoreTest";
+import StorageTest from "./firebasaeTest/firestrageTest";
+import RealtimeDatabaseTest from './firebasaeTest/realtimeatabaseTest'
+import AuthTest from './firebasaeTest/AuthTest'
 
 function App() {
   return (
     <div className="App">
-      <Router>
-        <Routes>
-          <Route path="/login" element={<Login />} />
-          <Route path="/" element={<Toppage />} />
-        </Routes>
-      </Router>
+      delete
     </div>
-  )
+  );
 }
 
-export default App
+export default App;
