@@ -8,7 +8,7 @@ import noImg from '../../assets/image/noImg.jpg'
 
 const MainHeader = () => {
   return (
-    <div className="main-header-container">
+    <header className="main-header-container">
       <div className="right-contents">
         <div className="action-button">
           <FavoriteIcon className="action-icon" style={{ fontSize: 32 }} />
@@ -18,7 +18,7 @@ const MainHeader = () => {
         <img src={noImg} alt="profile" className="profile-image" />
         <Button className="listing-button">出品</Button>
       </div>
-    </div>
+    </header>
   )
 }
 
