@@ -1,0 +1,31 @@
+.main-header-container {
+  height: 60px;
+  display: flex;
+  /* background-color: #dfdfdf; */
+  align-items: center;
+  height: 60px;
+  padding: 2px 34px;
+  border-bottom: 2px solid #E7E7E7;
+}
+
+.right-contents {
+  display: flex;
+  margin-left: auto;
+  align-items: center;
+  gap: 30px;
+}
+
+.action-button {
+  display: flex;
+  gap: 25px;
+}
+
+.action-icon {
+  color: #98c1ff;
+}
+
+.profile-image {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+}
