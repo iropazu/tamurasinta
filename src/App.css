@@ -5,5 +5,6 @@
 }
 
 main {
+  height: 100vh;
   padding-top: 65px;
 }
