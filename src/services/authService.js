@@ -3,7 +3,7 @@ import { auth, db } from '../firebase/firebase';
 import { collection,doc,setDoc  } from "firebase/firestore";
 import { createUserWithEmailAndPassword,signInWithEmailAndPassword,signOut } from "firebase/auth";
 
-export const signUp=async(email,password,authData)=>{
+export const signUp=async(email,password)=>{
 
   try{
     const userCredential = await createUserWithEmailAndPassword(auth,email,password)
@@ -11,11 +11,21 @@ export const signUp=async(email,password,authData)=>{
 
     await setDoc(doc(collection(db, 'users'), uid), {
       email: email,
-      ...authData,
       timeData: new Date()
     });
   } catch (error) {
-      throw new Error(error);
+      throw error;
+  }
+}
+
+export const addData=async(data)=>{
+  try{
+    const uid=auth.currentUser?.uid
+    await setDoc(doc(collection(db,'users'),uid),{
+      ...data,
+    })
+  }  catch (error){
+    throw new Error(error)
   }
 }
 

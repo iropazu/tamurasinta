@@ -1,25 +1,55 @@
-import React from 'react'
+import React, { useState } from 'react'
 import style from '../styles/RegisterUser.module.css'
 import Button from '../components/Button/Button'
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
+import { signUp } from '../services/authService';
 
 const Register = () => {
+
+  const [mail,setMail]=useState('')
+  const [password,setPassword]=useState('')
+  const [error,setError]=useState('')
+
+  const navigate=useNavigate()
+
+
+  const handleSignUp=async()=>{
+    try{
+      await signUp(mail,password)
+      navigate('/RegisterUser')
+    } catch (error){
+      if (error.code==='auth/email-already-in-use'){
+        setError('既に登録済みのメールアドレスだよ')
+      } else if (error.code==='auth/invalid-email'){
+        setError('メールアドレスの形式が正しくないよ')
+      } else if (error.code==='auth/weak-password'){
+        setError('パスワード6文字以上で入力してよ')
+      } else {
+        setError('なんかエラー起きたよ')
+      }
+
+    }
+  }
+
   return (
   <div>
-    <Link to='/Register'><ArrowBackIosNewIcon style={{fontSize: 25,opacity:0.5}} className={style.back}></ArrowBackIosNewIcon></Link>
+    <Link to='/'><ArrowBackIosNewIcon style={{fontSize: 25,opacity:0.5}} className={style.back}></ArrowBackIosNewIcon></Link>
     <h1 className={style.title}>会員登録</h1>
-    <form action="/" className={style.form}>
+    <div className={style.form}>
       <div className="send_input">
         <label className={style.label}>メールアドレス</label>
-        <input type="text" className={style.input}/>
+        <input type="text" className={style.input} onChange={(e)=>{setMail(e.target.value)}}/>
       </div>
       <div className="send_input">
         <label className={style.label}>パスワード</label>
-        <input type="password" className={style.input}/>
+        <input type="password" className={style.input} onChange={(e)=>{setPassword(e.target.value)}}/>
       </div>
-    </form>
-    <Button className={style.button}>次へ</Button>
+      {error && (
+      <p className={style.error}>※{error}</p>
+    )}
+    </div>
+    <Button onClick={handleSignUp} className={style.button}>次へ</Button>
   </div>
   )
 }
