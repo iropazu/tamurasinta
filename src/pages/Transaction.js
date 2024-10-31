@@ -1,6 +1,7 @@
 import React from 'react'
 import sample1 from '../assets/image/sample1.jpeg'
 import styles from '../styles/Transaction.module.css'
+import SendIcon from '@mui/icons-material/Send'
 
 const Transaction = () => {
   return (
@@ -38,6 +39,12 @@ const Transaction = () => {
               <span>hogehogehoge</span>
             </div>
           </div>
+        </div>
+        <div className={styles.send_container}>
+          <input className={styles.send} />
+          <button>
+            <SendIcon className={styles.bt} />
+          </button>
         </div>
       </div>
     </div>
