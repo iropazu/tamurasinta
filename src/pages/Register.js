@@ -38,6 +38,7 @@ const Register = () => {
   const handleGoogleSignUp = async () => {
     try {
       await GoogleSignUp()
+      navigate('/RegisterUser')
     } catch (error) {
       console.log(error)
     }
