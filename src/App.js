@@ -3,6 +3,7 @@ import './App.css'
 import Login from './pages/Login'
 import Toppage from './pages/Toppage'
 import MainHeader from './components/Header/MainHeader'
+import Footer from './components/Footer/Footer'
 import Transaction from './pages/Transaction'
 
 function App() {
@@ -18,6 +19,7 @@ function App() {
             <Route path="/transaction" element={<Transaction />} />
           </Routes>
         </main>
+        <Footer />
       </Router>
     </div>
   )
