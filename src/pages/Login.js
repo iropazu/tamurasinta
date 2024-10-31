@@ -8,7 +8,6 @@ const Login = () => {
     <input type = "text"></input>
     <div>または</div>
     <input type = "text"></input>
-    
   </div>
 }
 
