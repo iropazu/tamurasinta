@@ -13,7 +13,7 @@ const Login = () => {
     <div>または</div>
     <input type = "text"placeholder="Googleで登録" ></input>
     
-    
+    <button>ログイン</button>
   </div>
 }
 
