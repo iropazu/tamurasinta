@@ -3,11 +3,11 @@ import style from '../styles/Login.module.css'
 
 const Login = () => {
   return <div><body className={style.body}>ログイン</body>
-    
-    <div>メールアドレス</div>
+  
+    <div><body className={style.body}>メールアドレス</body></div>
     <input type = "text"></input>
     
-    <div>パスワード</div>
+    <div><body className={style.body}>パスワード</body></div>
     
     <input type = "text"></input>
     <div>または</div>
