@@ -13,25 +13,40 @@ const Register = () => {
 
   const navigate = useNavigate()
 
+  const validatePassword=()=>{
+    if (password===''){
+      setError('パスワード入力されてないよ')
+      return false
+    } else if (password.length<6){
+      setError('パスワードは6文字以上で入力してよ')
+      return false
+    }
+    return true
+  }
+
+  const validateEmail=()=>{
+    const regix=/^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if(!regix.test(mail)){
+      setError('メールアドレスの形式が正しくないよ')
+      return false
+    }
+    return true
+  }
 
   const handleSignUp = async () => {
     try {
+      if (!validatePassword() || !validateEmail()){
+        return
+      }
       await signUp(mail, password)
       navigate('/RegisterUser')
     } catch (error) {
       if (error.code === 'auth/email-already-in-use') {
         setError('既に登録済みのメールアドレスだよ')
-      } else if (error.code === 'auth/invalid-email') {
-        setError('メールアドレスの形式が正しくないよ')
-      } else if (error.code === 'auth/weak-password') {
-        setError('パスワード6文字以上で入力してよ')
-      } else if (error.code === 'auth/missing-password') {
-        setError('パスワード入力されてないよ')
       } else {
         setError('なんかエラー起きたよ')
         console.log(error)
       }
-
     }
   }
 

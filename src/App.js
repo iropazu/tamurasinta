@@ -19,8 +19,8 @@ function App() {
             <Route path="/" element={<Toppage />} />
             <Route path="*" element={<div>Not Found</div>} />
             <Route path="/transaction" element={<Transaction />} />
-            <Route path="/RegisterUser" element={<RegisterUser />} />
-            <Route path="/Register" element={<Register />} />
+            <Route path="/registerUser" element={<RegisterUser />} />
+            <Route path="/register" element={<Register />} />
           </Routes>
         </main>
         <Footer />
