@@ -1,7 +1,8 @@
 import React from 'react'
+import style from '../styles/Login.module.css'
 
 const Login = () => {
-  return <div><body>ログイン</body>
+  return <div><body className={style.body}>ログイン</body>
     
     <div>メールアドレス</div>
     <input type = "text"></input>
@@ -10,8 +11,9 @@ const Login = () => {
     
     <input type = "text"></input>
     <div>または</div>
-    <input type = "text"></input>
-    <style></style>
+    <input type = "text"placeholder="Googleで登録" ></input>
+    
+    
   </div>
 }
 
