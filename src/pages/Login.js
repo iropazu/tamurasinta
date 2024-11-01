@@ -12,7 +12,10 @@ const Login = () => {
     <input type = "text"></input>
     <div>または</div>
     
-    <button className={style.button}><img src="https://developers.google.com/identity/images/g-logo.png" className={style.picture}/></button>
+    <button className={style.button}>
+      <img src="https://developers.google.com/identity/images/g-logo.png" className={style.picture}/>
+      <p>Googleで登録</p>
+    </button>
     
     <button body className={style.body}>ログイン</button>
   </div>
