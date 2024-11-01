@@ -17,7 +17,7 @@ const Login = () => {
       <p className={style.pic}>Googleで登録</p>
     </button>
     
-    <button body className={style.body}>ログイン</button>
+    <button body className={style.button01}>ログイン</button>
   </div>
 }
 
