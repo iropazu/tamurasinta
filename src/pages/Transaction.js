@@ -4,6 +4,11 @@ import styles from '../styles/Transaction.module.css'
 import SendIcon from '@mui/icons-material/Send'
 
 const Transaction = () => {
+  // チャットのメッセージを送信する関数
+  const sendMessage = () => {
+    console.log('メッセージを送信しました')
+  }
+
   return (
     <div className={styles.transaction_container}>
       <div className={styles.trading_information}>
@@ -35,16 +40,40 @@ const Transaction = () => {
           <h5>メッセージ</h5>
           <div className={styles.user_message}>
             <div className={styles.message}>
-              <img src={sample1} alt="sample1"></img>
-              <span>hogehogehoge</span>
+              <img src={sample1} alt="sample1" />
+              <div className={styles.user_title}>
+                <p>Mayu</p>
+                <span>hogehogehoge</span>
+              </div>
+            </div>
+            <div className={styles.message}>
+              <img src={sample1} alt="sample1" />
+              <div className={styles.user_title}>
+                <p>Mayu</p>
+                <span>hogehogehoge</span>
+              </div>
+            </div>
+            <div className={styles.message}>
+              <img src={sample1} alt="sample1" />
+              <div className={styles.user_title}>
+                <p>Mayu</p>
+                <span>hogehogehoge</span>
+              </div>
+            </div>
+            <div className={styles.message}>
+              <img src={sample1} alt="sample1" />
+              <div className={styles.user_title}>
+                <p>Mayu</p>
+                <span>hogehogehoge</span>
+              </div>
             </div>
           </div>
-        </div>
-        <div className={styles.send_container}>
-          <input className={styles.send} />
-          <button>
-            <SendIcon className={styles.bt} />
-          </button>
+          <div className={styles.send_container}>
+            <input className={styles.send} />
+            <button>
+              <SendIcon className={styles.bt} />
+            </button>
+          </div>
         </div>
       </div>
     </div>
