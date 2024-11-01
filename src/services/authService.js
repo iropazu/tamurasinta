@@ -1,21 +1,43 @@
-import React from "react";
-import { auth, db } from '../firebase/firebase';
+import { auth, db, googleProvider } from '../firebase/firebase';
 import { collection,doc,setDoc  } from "firebase/firestore";
-import { createUserWithEmailAndPassword,signInWithEmailAndPassword,signOut } from "firebase/auth";
+import { createUserWithEmailAndPassword,signInWithEmailAndPassword,signInWithPopup,signOut } from "firebase/auth";
 
-export const signUp=async(email,password,authData)=>{
-
+export const signUp=async(email,password)=>{
   try{
     const userCredential = await createUserWithEmailAndPassword(auth,email,password)
     const uid=userCredential.user.uid
 
     await setDoc(doc(collection(db, 'users'), uid), {
       email: email,
-      ...authData,
       timeData: new Date()
     });
   } catch (error) {
-      throw new Error(error);
+      throw error;
+  }
+}
+
+export const GoogleSignUp=async()=>{
+  try{
+    const result= await signInWithPopup(auth,googleProvider)
+    const user=result.user
+
+    await setDoc(doc(collection(db,'users'),user.uid),{
+      mail:user.email,
+      timeData: new Date()
+    })
+  }catch(error){
+    throw error
+  }
+}
+
+export const addData=async(data)=>{
+  try{
+    const uid=auth.currentUser?.uid
+    await setDoc(doc(collection(db,'users'),uid),{
+      ...data,
+    },{merge:true})
+  }  catch (error){
+    throw new Error(error)
   }
 }
 

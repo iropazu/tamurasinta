@@ -3,6 +3,10 @@ import './App.css'
 import Login from './pages/Login'
 import Toppage from './pages/Toppage'
 import MainHeader from './components/Header/MainHeader'
+import Footer from './components/Footer/Footer'
+import Transaction from './pages/Transaction'
+import RegisterUser from './pages/RegisterUser'
+import Register from './pages/Register'
 
 function App() {
   return (
@@ -13,8 +17,13 @@ function App() {
           <Routes>
             <Route path="/login" element={<Login />} />
             <Route path="/" element={<Toppage />} />
+            <Route path="*" element={<div>Not Found</div>} />
+            <Route path="/transaction" element={<Transaction />} />
+            <Route path="/registerUser" element={<RegisterUser />} />
+            <Route path="/register" element={<Register />} />
           </Routes>
         </main>
+        <Footer />
       </Router>
     </div>
   )

@@ -1,0 +1,29 @@
+.toppage-container {
+  margin: 20px;
+  padding: 0;
+}
+
+.toppage-container h5 {
+  margin-top: 25px;
+  margin-bottom: 20px;
+  font-size: 20px;
+  color: #666666;
+  font-weight: 700;
+  line-height: 21px;
+}
+
+.img-container {
+  display: flex;
+  gap: 40px;
+  width: 100%;
+  overflow: hidden;
+  position: relative;
+}
+
+.sample-image {
+  width: 216px;
+  height: 261px;
+  border-radius: 6px;
+  object-fit: cover;
+  box-shadow: 0px 4px 4px #4f4f4f40;
+}
