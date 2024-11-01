@@ -14,7 +14,7 @@ const Login = () => {
     <input type = "text"placeholder="Googleで登録"  ></input>
     <img src="https://developers.google.com/identity/images/g-logo.png" alt={style.body}></img>
     
-    <button>ログイン</button>
+    <button body className={style.body}>ログイン</button>
   </div>
 }
 
