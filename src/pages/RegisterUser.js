@@ -1,9 +1,11 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import style from '../styles/RegisterUser.module.css'
 import Button from '../components/Button/Button'
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import { Link, useNavigate } from 'react-router-dom';
 import { addData } from '../services/authService';
+import { onAuthStateChanged } from 'firebase/auth';
+import { auth } from '../firebase/firebase';
 
 const RegisterUser = () => {
 
@@ -11,8 +13,16 @@ const RegisterUser = () => {
   const [number,setnumber]=useState('')
   const [major,setmajor]=useState('')
   const [grade,setGrade]=useState('')
-
   const navigate=useNavigate()
+
+  useEffect(()=>{
+    const unsubscribe=onAuthStateChanged(auth,(user)=>{
+      if (user){
+        navigate('/')
+      }
+    })
+    return ()=>unsubscribe()
+  },[auth,navigate])
 
   const handleUserInfo=async()=>{
     const data={
