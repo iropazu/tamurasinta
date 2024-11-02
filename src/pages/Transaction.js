@@ -1,12 +1,24 @@
 import React from 'react'
 import sample1 from '../assets/image/sample1.jpeg'
 import styles from '../styles/Transaction.module.css'
+import MessageList from '../features/Transaction/MessageList'
 import SendIcon from '@mui/icons-material/Send'
+import { db } from '../firebase'
+import firebase from 'firebase'
 
 const Transaction = () => {
   // チャットのメッセージを送信する関数
-  const sendMessage = () => {
-    console.log('メッセージを送信しました')
+  const sendMessage = async (chatRoomId, message, senderId) => {
+    try {
+      await db.collection('chats').doc(chatRoomId).collection('messages').add({
+        text: message,
+        senderId: senderId,
+        name: 'name',
+        timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+      })
+    } catch (error) {
+      console.error('メッセージ送信エラー: ', error)
+    }
   }
 
   return (
@@ -38,40 +50,11 @@ const Transaction = () => {
         </div>
         <div>
           <h5>メッセージ</h5>
-          <div className={styles.user_message}>
-            <div className={styles.message}>
-              <img src={sample1} alt="sample1" />
-              <div className={styles.user_title}>
-                <p>Mayu</p>
-                <span>hogehogehoge</span>
-              </div>
-            </div>
-            <div className={styles.message}>
-              <img src={sample1} alt="sample1" />
-              <div className={styles.user_title}>
-                <p>Mayu</p>
-                <span>hogehogehoge</span>
-              </div>
-            </div>
-            <div className={styles.message}>
-              <img src={sample1} alt="sample1" />
-              <div className={styles.user_title}>
-                <p>Mayu</p>
-                <span>hogehogehoge</span>
-              </div>
-            </div>
-            <div className={styles.message}>
-              <img src={sample1} alt="sample1" />
-              <div className={styles.user_title}>
-                <p>Mayu</p>
-                <span>hogehogehoge</span>
-              </div>
-            </div>
-          </div>
+          <MessageList />
           <div className={styles.send_container}>
             <input className={styles.send} />
             <button>
-              <SendIcon className={styles.bt} />
+              <SendIcon />
             </button>
           </div>
         </div>
