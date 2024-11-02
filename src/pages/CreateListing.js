@@ -13,6 +13,7 @@ const CreateListing = () => {
   const [descript, setDescript] = useState('')
   const [price, setPrice] = useState('')
   const inputRef = useRef(null)
+  const textareaRef=useRef(null)
 
   const data = {
     image,
@@ -34,6 +35,13 @@ const CreateListing = () => {
     inputRef.current.click()
   }
 
+  const handleTextarea=(e)=>{
+    const textarea=textareaRef.current
+    textarea.style.height=''  
+    textarea.style.height=textarea.scrollHeight+'px'
+    setDescript(e.target.value)
+  }
+
 
   return (
     <div>
@@ -51,7 +59,7 @@ const CreateListing = () => {
               <p className={style.dragP}>ドラッグ＆ドロップ</p>
               <p className={style.andP}>または</p>
               <button className={style.button} onClick={handleImageUp}>画像を選択</button>
-              <input onChange={(e)=>{setImage(e.target.files[0])}} type="file" style={{ display: 'none' }} ref={inputRef} />
+              <input onChange={(e)=>{setImage(e.target.files[0])}} accept="image/*" type="file" style={{ display: 'none' }} ref={inputRef} />
             </div>)}
           </div>
         </div>
@@ -64,9 +72,16 @@ const CreateListing = () => {
           <p className={style.p}>授業名</p>
           <input type="text" className={style.input} onChange={(e) => { setSubject(e.target.value) }} />
           <p className={style.p}>商品の状態</p>
-          <input type="text" className={style.input} onChange={(e) => { setState(e.target.value) }} />
+          <select for='prefecture' onChange={(e) => { setState(e.target.value) }}>
+            <option value=""></option>
+            <option value="かなり良い">かなり良い</option>
+            <option value="良い">良い</option>
+            <option value="普通">普通</option>
+            <option value="悪い">悪い</option>
+            <option value="かなり悪い">かなり悪い</option>
+          </select>
           <p className={style.p}>商品の詳細</p>
-          <input type="text" className={style.input} onChange={(e) => { setDescript(e.target.value) }} />
+          <textarea ref={textareaRef}  onInput={handleTextarea}></textarea>
         </div>
         <div className={style.inputWrap}>
           <h2 className={style.h2}>販売価格</h2>

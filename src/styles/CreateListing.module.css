@@ -41,6 +41,24 @@
   margin: 10px 0 0 0;
 }
 
+.inputWrap textarea{
+  width: 602.33px;
+  border-radius: 6px;
+  border: 1px solid#666666;
+  resize: none;
+  padding: 20px;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+.inputWrap select{
+  width: 602.33px;
+  height: 40.33px;
+  border-radius: 6px;
+  border: 1px solid#666666;
+  box-sizing: border-box;
+  padding: 5px;
+}
+
 .dragP{
   color: #85b6ff;
 }
@@ -67,7 +85,7 @@
 
 .Button{
   display: block;
-  margin: 50px auto 0 auto;
+  margin: 50px auto 50px auto;
   width: 159px;
   height: 46px;
 }
