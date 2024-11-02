@@ -1,0 +1,73 @@
+.title {
+  width: 200px;
+  margin: 40px auto 50px auto;
+  text-align: center;
+  color :#666666;
+}
+
+.inputContainer{
+  width: 600px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: left;
+  gap: 30px;
+}
+
+.h2 {
+  color:#666666
+}
+
+.input {
+  width: 600px;
+  height: 35px;
+  border-radius: 6px;
+  border: 1px solid#767676;
+}
+
+.drop {
+  width: 600px;
+  height: 225px;
+  border: 1px dashed#333;
+}
+
+.firstContainer{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.cameraAltIcon{
+  margin: 10px 0 0 0;
+}
+
+.dragP{
+  color: #85b6ff;
+}
+
+.andP{
+  color: #85b6ff;
+  margin: 20px 0 20px 0;
+}
+
+.button {
+  width: 150px;
+}
+
+.img {
+  max-height: 100%;
+  display: block;
+  margin: 0 auto;
+}
+
+.p {
+  color: #666666;
+  margin: 10px 0 0 0;
+}
+
+.Button{
+  display: block;
+  margin: 50px auto 0 auto;
+  width: 159px;
+  height: 46px;
+}
