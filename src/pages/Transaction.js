@@ -1,12 +1,15 @@
 import React from 'react'
+import { useState } from 'react'
 import sample1 from '../assets/image/sample1.jpeg'
 import styles from '../styles/Transaction.module.css'
 import MessageList from '../features/Transaction/MessageList'
 import SendIcon from '@mui/icons-material/Send'
-import { db } from '../firebase'
-import firebase from 'firebase'
+import { db } from '../firebase/firebase'
 
 const Transaction = () => {
+  const [message, setMessage] = useState('')
+
+
   // チャットのメッセージを送信する関数
   const sendMessage = async (chatRoomId, message, senderId) => {
     try {
@@ -14,7 +17,6 @@ const Transaction = () => {
         text: message,
         senderId: senderId,
         name: 'name',
-        timestamp: firebase.firestore.FieldValue.serverTimestamp(),
       })
     } catch (error) {
       console.error('メッセージ送信エラー: ', error)
@@ -52,8 +54,11 @@ const Transaction = () => {
           <h5>メッセージ</h5>
           <MessageList />
           <div className={styles.send_container}>
-            <input className={styles.send} />
-            <button>
+            <input
+              className={styles.send}
+              onChange={(e) => setMessage(e.target.value)}
+            />
+            <button onClick={sendMessage}>
               <SendIcon />
             </button>
           </div>
