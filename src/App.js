@@ -20,9 +20,9 @@ function App() {
             <Route path="/" element={<Toppage />} />
             <Route path="*" element={<div>Not Found</div>} />
             <Route path="/transaction" element={<Transaction />} />
-            <Route path="/registerUser" element={<RegisterUser />} />
+            <Route path="/register-user" element={<RegisterUser />} />
             <Route path="/register" element={<Register />} />
-            <Route path='/createListing' element={<CreateListing/>}/>
+            <Route path='/create-listing' element={<CreateListing/>}/>
           </Routes>
         </main>
         <Footer />
