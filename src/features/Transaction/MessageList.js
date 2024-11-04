@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react'
 import styles from '../../styles/Transaction.module.css'
-import sample1 from '../../assets/image/sample1.jpeg'
 import { realtimeDb } from '../../firebase/firebase'
 import { ref, onValue } from 'firebase/database'
 
