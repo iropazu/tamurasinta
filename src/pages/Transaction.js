@@ -1,5 +1,5 @@
 import React from 'react'
-import { useState } from 'react'
+import { useState, useRef } from 'react'
 import sample1 from '../assets/image/sample1.jpeg'
 import styles from '../styles/Transaction.module.css'
 import MessageList from '../features/Transaction/MessageList'
@@ -8,13 +8,14 @@ import { realtimeDb } from '../firebase/firebase'
 import { push, ref, serverTimestamp } from 'firebase/database'
 
 const Transaction = () => {
-  const [message, setMessage] = useState('')
+  const inputRef = useRef(null)
   const itemId = 'm73319947785'
   const roomId = itemId
   const senderId = 'your_sender_id'
 
   // チャットのメッセージを送信する関数
   const sendMessage = () => {
+    const message = inputRef.current.value
     if (message.trim() === '') return
 
     const sendmessagesRef = ref(realtimeDb, `rooms/${roomId}/messages`)
@@ -25,6 +26,7 @@ const Transaction = () => {
     })
       .then(() => {
         alert('Message sent successfully!')
+        inputRef.current.value = ''
       })
       .catch((error) => {
         alert('Error sending message:', error)
@@ -62,10 +64,7 @@ const Transaction = () => {
           <h5>メッセージ</h5>
           <MessageList />
           <div className={styles.send_container}>
-            <input
-              className={styles.send}
-              onChange={(e) => setMessage(e.target.value)}
-            />
+            <input className={styles.send} ref={inputRef} />
             <button onClick={sendMessage}>
               <SendIcon />
             </button>

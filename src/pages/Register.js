@@ -1,42 +1,41 @@
 import React, { useEffect, useState } from 'react'
 import style from '../styles/RegisterUser.module.css'
 import Button from '../components/Button/Button'
-import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
+import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew'
 import { Link, useNavigate } from 'react-router-dom'
-import { GoogleSignUp, signUp } from '../services/authService';
-import { onAuthStateChanged } from 'firebase/auth';
-import { auth } from '../firebase/firebase';
+import { GoogleSignUp, signUp } from '../services/authService'
+import { onAuthStateChanged } from 'firebase/auth'
+import { auth } from '../firebase/firebase'
 
 const Register = () => {
-
   const [mail, setMail] = useState('')
   const [password, setPassword] = useState('')
   const [error, setError] = useState('')
   const navigate = useNavigate()
 
-  useEffect(()=>{
-    const unsubscribe=onAuthStateChanged(auth,(user)=>{
-      if (user){
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (user) {
         navigate('/')
       }
     })
-    return ()=>unsubscribe()
-  },[auth,navigate])
+    return () => unsubscribe()
+  }, [auth, navigate])
 
-  const validatePassword=()=>{
-    if (password===''){
+  const validatePassword = () => {
+    if (password === '') {
       setError('パスワード入力されてないよ')
       return false
-    } else if (password.length<6){
+    } else if (password.length < 6) {
       setError('パスワードは6文字以上で入力してよ')
       return false
     }
     return true
   }
 
-  const validateEmail=()=>{
-    const regix=/^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if(!regix.test(mail)){
+  const validateEmail = () => {
+    const regix = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+    if (!regix.test(mail)) {
       setError('メールアドレスの形式が正しくないよ')
       return false
     }
@@ -45,7 +44,7 @@ const Register = () => {
 
   const handleSignUp = async () => {
     try {
-      if (!validatePassword() || !validateEmail()){
+      if (!validatePassword() || !validateEmail()) {
         return
       }
       await signUp(mail, password)
@@ -71,28 +70,47 @@ const Register = () => {
 
   return (
     <div>
-      <Link to='/'><ArrowBackIosNewIcon style={{ fontSize: 25, opacity: 0.5 }} className={style.back}></ArrowBackIosNewIcon></Link>
+      <Link to="/">
+        <ArrowBackIosNewIcon
+          style={{ fontSize: 25, opacity: 0.5 }}
+          className={style.back}
+        ></ArrowBackIosNewIcon>
+      </Link>
       <h1 className={style.title}>会員登録</h1>
       <div className={style.form}>
         <div className="send_input">
           <label className={style.label}>メールアドレス</label>
-          <input type="text" className={style.input} onChange={(e) => { setMail(e.target.value) }} />
+          <input
+            type="text"
+            className={style.input}
+            onChange={(e) => {
+              setMail(e.target.value)
+            }}
+          />
         </div>
         <div className="send_input">
           <label className={style.label}>パスワード</label>
-          <input type="password" className={style.input} onChange={(e) => { setPassword(e.target.value) }} />
+          <input
+            type="password"
+            className={style.input}
+            onChange={(e) => {
+              setPassword(e.target.value)
+            }}
+          />
         </div>
-        {error && (
-          <p className={style.error}>※{error}</p>
-        )}
+        {error && <p className={style.error}>※{error}</p>}
         <p>または</p>
-          <button onClick={handleGoogleSignUp} className={style.googleButton}>
-            <img src="https://developers.google.com/identity/images/g-logo.png" className={style.googleLogo} />
-            <p className={style.googleP}>Googleでサインイン</p>
-          </button>
-
+        <button onClick={handleGoogleSignUp} className={style.googleButton}>
+          <img
+            src="https://developers.google.com/identity/images/g-logo.png"
+            className={style.googleLogo}
+          />
+          <p className={style.googleP}>Googleでサインイン</p>
+        </button>
       </div>
-      <Button onClick={handleSignUp} className={style.button}>次へ</Button>
+      <Button onClick={handleSignUp} className={style.button}>
+        次へ
+      </Button>
     </div>
   )
 }
