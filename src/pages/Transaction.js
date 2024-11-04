@@ -4,23 +4,30 @@ import sample1 from '../assets/image/sample1.jpeg'
 import styles from '../styles/Transaction.module.css'
 import MessageList from '../features/Transaction/MessageList'
 import SendIcon from '@mui/icons-material/Send'
-import { db } from '../firebase/firebase'
+import { realtimeDb } from '../firebase/firebase'
+import { push, ref, serverTimestamp } from 'firebase/database'
 
 const Transaction = () => {
   const [message, setMessage] = useState('')
-
+  const itemId = 'm73319947785'
+  const roomId = itemId
+  const senderId = 'your_sender_id'
 
   // チャットのメッセージを送信する関数
-  const sendMessage = async (chatRoomId, message, senderId) => {
-    try {
-      await db.collection('chats').doc(chatRoomId).collection('messages').add({
-        text: message,
-        senderId: senderId,
-        name: 'name',
+  const sendMessage = () => {
+    if (message.trim() === '') return
+
+    const messagesRef = ref(realtimeDb, `rooms/${roomId}/messages/${senderId}`)
+    push(messagesRef, {
+      messageText: message,
+      timestamp: serverTimestamp(),
+    })
+      .then(() => {
+        alert('Message sent successfully!')
       })
-    } catch (error) {
-      console.error('メッセージ送信エラー: ', error)
-    }
+      .catch((error) => {
+        alert('Error sending message:', error)
+      })
   }
 
   return (
