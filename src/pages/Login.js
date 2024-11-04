@@ -5,12 +5,12 @@ const Login = () => {
   return <div><body className={style.body}>ログイン</body>
   
     <div><body className={style.p}>メールアドレス</body></div>
-    <input type = "text"></input>
+    <body className={style.text}><input type = "text"></input></body>
     
     <div><body className={style.p}>パスワード</body></div>
+    <body className={style.text}><input type = "text"></input></body>  
     
-    <input type = "text"></input>
-    <div>または</div>
+    <div><body></body></div>
     
     <button className={style.button}>
       <img src="https://developers.google.com/identity/images/g-logo.png" className={style.picture}/>
