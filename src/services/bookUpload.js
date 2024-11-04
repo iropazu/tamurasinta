@@ -3,22 +3,27 @@ import { auth, db, storage } from "../firebase/firebase"
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage"
 
 
-export const addImage=async(imagefile)=>{
+export const addImage=async(imagefileList)=>{
   try{
-    const storageRef=ref(storage,`bookImage/${Date.now()}_${imagefile.name}`)
+    const imageArray=Array.from(imagefileList)
+    const imagePromies=imageArray.map(async(image,_)=>{
+      const storageRef=ref(storage,`bookImage/${Date.now()}_${image.name}`)
 
-    await uploadBytes(storageRef,imagefile)
-    const imageUrl=await getDownloadURL(storageRef)
-    console.log(imageUrl)
-    return imageUrl
+      await uploadBytes(storageRef,image)
+      const imageUrl=await getDownloadURL(storageRef)
+      return imageUrl
+    })
+
+    const images=await Promise.all(imagePromies)
+    return images
   }catch(error){
     console.log('addImageのエラー:',error)
   }
 
 }
 
-export const bookUpload=async(imagefile,bookInfo)=>{
-  const Url=await addImage(imagefile)
+export const bookUpload=async(imagefileList,bookInfo)=>{
+  const Url=await addImage(imagefileList)
   const user=auth.currentUser
   try{
     await addDoc(collection(db,'books'),{

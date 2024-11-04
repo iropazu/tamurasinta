@@ -134,3 +134,7 @@
   width: 159px;
   height: 46px;
 }
+
+.errorP {
+  color: #d41c1c !important;
+}

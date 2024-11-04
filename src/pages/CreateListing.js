@@ -3,6 +3,9 @@ import style from '../styles/CreateListing.module.css'
 import CameraAltIcon from '@mui/icons-material/CameraAlt';
 import { logout } from '../services/authService';
 import Button from '../components/Button/Button';
+import { bookUpload } from '../services/bookUpload';
+import { useNavigate } from 'react-router-dom';
+import { auth } from '../firebase/firebase';
 
 const CreateListing = () => {
 
@@ -13,11 +16,12 @@ const CreateListing = () => {
   const [descript, setDescript] = useState('')
   const [price, setPrice] = useState('')
   const [bigImage, setBigImage] = useState(null)
+  const [p,setP]=useState('')
+  const navigate=useNavigate()
   const inputRef = useRef(null)
   const textareaRef = useRef(null)
 
   const data = {
-    images,
     name,
     subject,
     state,
@@ -54,12 +58,29 @@ const CreateListing = () => {
     setDescript(e.target.value)
   }
 
+  const handleInputCheck=(e)=>{
+    if (!Number.isInteger(Number(e.target.value))){
+      setP('※整数を入力してください')
+      return
+    }
+    setP('')
+  }
+
   const handleImageClick = (URL) => {
     setBigImage(URL)
   }
 
   const handleImageClose = () => {
     setBigImage('')
+  }
+
+  const handleBookUpload=async()=>{
+    if(!auth.currentUser){
+      navigate('/register')
+      return
+    }
+    await bookUpload(images,data)
+    navigate('/')
   }
 
 
@@ -101,7 +122,7 @@ const CreateListing = () => {
           <p>授業名</p>
           <input type="text" onChange={(e) => { setSubject(e.target.value) }} />
           <p>商品の状態</p>
-          <select for='prefecture' onChange={(e) => { setState(e.target.value) }}>
+          <select htmlFor='prefecture' onChange={(e) => { setState(e.target.value) }}>
             <option value=""></option>
             <option value="かなり良い">かなり良い</option>
             <option value="良い">良い</option>
@@ -115,10 +136,13 @@ const CreateListing = () => {
         <div className={style.info_field}>
           <h2 >販売価格</h2>
           <p>販売価格</p>
-          <input type="text" onChange={(e) => { setPrice(e.target.value) }} />
+          <input type="text" onInput={handleInputCheck} onChange={(e) => { setPrice(e.target.value) }} />
+          {p.length > 0 && (
+            <p className={style.errorP}>{p}</p>
+          )}
         </div>
       </div>
-      <Button className={style.Button}>出品する</Button>
+      <Button onClick={handleBookUpload} className={style.Button}>出品する</Button>
     </div>
   )
 }
