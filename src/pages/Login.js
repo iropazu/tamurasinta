@@ -6,10 +6,14 @@ const Login = () => {
   
     <div><body className={style.p}>メールアドレス</body></div>
     <body className={style.text}><input type = "text"></input></body>
+  
+    <div>&nbsp;</div>
     
     <div><body className={style.p}>パスワード</body></div>
     <body className={style.text}><input type = "text"></input></body>  
     
+    <div>&nbsp;</div>
+
     <div><body className={style.mataha}>または</body></div>
     
     <button className={style.button}>
