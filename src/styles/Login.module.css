@@ -1,11 +1,13 @@
 
 .body
 {
+    line-height: 2.0;
     text-align: center;
     font-size: larger;
 }
 
 .p{
+    line-height: 2.0;
     text-align: center;
     font-size: x-small;
 }
@@ -45,11 +47,16 @@
 }
 
 .pic {
-    text-align: right;
+    margin: auto;
+    text-align: center;
 }
 
 .button01 {
     text-align: center;
     width: 100px;
     height: 25px;
+}
+
+.mataha {
+    text-align: center;
 }
