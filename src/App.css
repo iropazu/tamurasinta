@@ -5,6 +5,6 @@
 }
 
 main {
-  height: 100vh;
+  min-height: calc(100vh - 100px);
   padding-top: 65px;
 }
