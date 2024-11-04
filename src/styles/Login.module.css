@@ -1,12 +1,12 @@
 
 .body
 {
-    margin: auto;
+    text-align: center;
     font-size: larger;
 }
 
 .p{
-    margin: auto;
+    text-align: center;
     font-size: x-small;
 }
 
