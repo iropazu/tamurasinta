@@ -55,15 +55,18 @@
 }
 
 .imageWrap {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 30px;
 }
 
 .containerImg{
-  height: 190px;
-  width: 142px;
-  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 130px;
+  height: 130px;
+  background-color: #f5f5f5;
   position: relative;
 }
 
