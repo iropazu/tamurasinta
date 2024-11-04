@@ -15,11 +15,16 @@ const Login = () => {
     <div>&nbsp;</div>
 
     <div><body className={style.mataha}>または</body></div>
+
+    <div>&nbsp;</div>
     
     <button className={style.button}>
       <img src="https://developers.google.com/identity/images/g-logo.png" className={style.picture}/>
       <p className={style.pic}>Googleで登録</p>
     </button>
+
+    <div>&nbsp;</div>
+    <div>&nbsp;</div>
     
     <button body className={style.button01}>ログイン</button>
   </div>

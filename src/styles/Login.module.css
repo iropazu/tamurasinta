@@ -7,6 +7,8 @@
 }
 
 .p{
+    text-align: center;
+    margin: auto;
     line-height: 2.0;
     font-size: x-small;
 }
@@ -50,6 +52,7 @@
 
 .button01 {
     text-align: center;
+    margin: auto;
     width: 100px;
     height: 25px;
 }
