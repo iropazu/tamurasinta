@@ -13,8 +13,6 @@
 
 .body{
     margin: auto;
-    width: 300px;
-    height: 70px;
 }
 
 .button-center {
@@ -34,7 +32,7 @@
     color: black;
     border: 1px solid#333;
     width: 700px ;
-    height: 25px;
+    height: 30px;
     display: flex;
     align-items: center;
 }

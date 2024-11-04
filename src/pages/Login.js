@@ -5,12 +5,12 @@ const Login = () => {
   return <div><body className={style.body}>ログイン</body>
   
     <div><body className={style.p}>メールアドレス</body></div>
-    <body className={style.text}><input type = "text"></input></body>
+    <body className={style.text}><input type = "text" style={{width: 700, height: 30}}></input></body>
   
     <div>&nbsp;</div>
     
     <div><body className={style.p}>パスワード</body></div>
-    <body className={style.text}><input type = "text"></input></body>  
+    <body className={style.text}><input type = "text" style={{width: 700, height: 30}}></input></body>  
     
     <div>&nbsp;</div>
 
