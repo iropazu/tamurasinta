@@ -1,6 +1,8 @@
 
 .body
 {
+    font-family: Arial,  sans-serif;
+    font-weight: bold;
     line-height: 2.0;
     text-align: center;
     font-size: larger;
@@ -58,5 +60,7 @@
 }
 
 .mataha {
+    font-weight: lighter;
+    font-family: Arial,  sans-serif;
     text-align: center;
 }
