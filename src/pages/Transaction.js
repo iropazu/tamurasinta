@@ -17,8 +17,9 @@ const Transaction = () => {
   const sendMessage = () => {
     if (message.trim() === '') return
 
-    const messagesRef = ref(realtimeDb, `rooms/${roomId}/messages/${senderId}`)
-    push(messagesRef, {
+    const sendmessagesRef = ref(realtimeDb, `rooms/${roomId}/messages`)
+    push(sendmessagesRef, {
+      senderId: senderId,
       messageText: message,
       timestamp: serverTimestamp(),
     })
