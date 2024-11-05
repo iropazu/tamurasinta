@@ -2,11 +2,11 @@
   width: 200px;
   margin: 40px auto 50px auto;
   text-align: center;
-  color :#666666;
+  color: #666666;
 }
 
 .main h2 {
-  color:#666666
+  color: #666666;
 }
 
 .main input {
@@ -17,7 +17,7 @@
   padding: 5px;
   padding-left: 10px;
   box-sizing: border-box;
-  font-size: 20px;
+  font-size: 17px;
 }
 
 .main p {
@@ -25,7 +25,7 @@
   margin: 10px 0 0 0;
 }
 
-.bigImageContainer{
+.bigImageContainer {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -34,7 +34,7 @@
   height: 100vh;
   top: 50%;
   left: 50%;
-  transform: translate(-50%,-50%);
+  transform: translate(-50%, -50%);
   background-color: rgba(173, 173, 173, 0.8);
   z-index: 100;
 }
@@ -45,7 +45,7 @@
   margin: 70px 0 0 0;
 }
 
-.info_container{
+.info_container {
   width: 600px;
   margin: 0 auto;
   display: flex;
@@ -60,7 +60,7 @@
   gap: 30px;
 }
 
-.containerImg{
+.containerImg {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -94,7 +94,7 @@
   margin: 20px 0 0 0;
 }
 
-.image_field p{
+.image_field p {
   color: #85b6ff;
   margin: 0 0 10 0px;
 }
@@ -105,11 +105,11 @@
   margin: 10px 0 0 0;
 }
 
-.image_field button{
+.image_field button {
   width: 150px;
 }
 
-.info_field textarea{
+.info_field textarea {
   width: 602.33px;
   border-radius: 6px;
   border: 1px solid#666666;
@@ -117,18 +117,19 @@
   padding: 10px;
   box-sizing: border-box;
   overflow: hidden;
-  font-size: 20px;
+  font-size: 17px;
 }
-.info_field select{
+.info_field select {
   width: 602.33px;
   height: 40.33px;
   border-radius: 6px;
   border: 1px solid#666666;
   box-sizing: border-box;
   padding: 5px;
+  font-size: 17px;
 }
 
-.Button{
+.Button {
   display: block;
   margin: 50px auto 50px auto;
   width: 159px;
