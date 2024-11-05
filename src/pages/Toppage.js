@@ -1,12 +1,32 @@
-import React from 'react'
+import React, { useEffect } from 'react'
+import { useState } from 'react'
 import '../styles/Toppage.css'
 import sample1 from '../assets/image/sample1.jpeg'
 import sample2 from '../assets/image/sample2.jpeg'
 import sample3 from '../assets/image/sample3.jpeg'
 import sample4 from '../assets/image/sample4.jpeg'
 import sample5 from '../assets/image/sample5.jpeg'
+import { db } from '../firebase/firebase'
+import { collection, getDocs } from 'firebase/firestore'
 
 const Toppage = () => {
+  const [items, setItems] = useState([])
+
+  useEffect(() => {
+    const itemsRef = collection(db, 'books')
+
+    const fetchItems = async () => {
+      const itemSnapshot = await getDocs(itemsRef)
+      console.log('itemSnapshot', itemSnapshot)
+      itemSnapshot.forEach((doc) => {
+        setItems((prevItems) => [...prevItems, doc.data()])
+      })
+    }
+    fetchItems()
+  }, [])
+
+  console.log('items', items)
+
   return (
     <div className="toppage-container">
       <div className="in_transaction">
