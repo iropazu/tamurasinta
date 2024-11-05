@@ -1,7 +1,6 @@
 
 .body
 {
-    font-family: Arial,  sans-serif;
     font-weight: bold;
     line-height: 2.0;
     text-align: center;
@@ -9,28 +8,12 @@
 }
 
 .p{
-    text-align: center;
-    margin: auto;
     line-height: 2.0;
     font-size: x-small;
 }
 
-.body{
-    margin: auto;
-}
-
-.button-center {
-    margin: auto;
-    text-align: center;
-}
-
-.text {
-    margin: auto;
-    text-align: center;
-}
 
 .button {
-    text-align: left;
     margin: auto;
     background-color: white; 
     color: black;
@@ -42,19 +25,16 @@
 }
 
 .picture {
-    text-align: right;
     width: 20px;
     height: 20px;
 }
 
 .pic {
     margin: auto;
-    text-align: center;
 }
 
 .button01 {
-    text-align: center;
-    margin: auto;
+    margin: 0 auto;
     width: 100px;
     height: 25px;
 }
@@ -63,4 +43,11 @@
     font-weight: lighter;
     font-family: Arial,  sans-serif;
     text-align: center;
+}
+
+.main {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
 }

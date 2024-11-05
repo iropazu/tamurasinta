@@ -2,29 +2,28 @@ import React from 'react'
 import style from '../styles/Login.module.css'
 
 const Login = () => {
-  return <div><body className={style.body}>ログイン</body>
+  return <div className={style.main}><body className={style.body}>ログイン</body>
   
-    <div><body className={style.p}>メールアドレス</body></div>
-    <body className={style.text}><input type = "text" style={{width: 500, height: 30}}></input></body>
+    <div><p className={style.p}>メールアドレス</p>
+    <input type = "text" style={{width: 500, height: 30}}></input></div>
   
-    <div>&nbsp;</div>
     
-    <div><body className={style.p}>パスワード</body></div>
-    <body className={style.text}><input type = "text" style={{width: 500, height: 30}}></input></body>  
     
-    <div>&nbsp;</div>
+    <div><p className={style.p}>パスワード</p>
+    <input type = "text" style={{width: 500, height: 30}}></input> </div>
+    
+    
 
-    <div><body className={style.mataha}>または</body></div>
+    <div><p className={style.mataha}>または</p></div>
 
-    <div>&nbsp;</div>
+    
     
     <button className={style.button}>
       <img src="https://developers.google.com/identity/images/g-logo.png" className={style.picture}/>
       <p className={style.pic}>Googleで登録</p>
     </button>
 
-    <div>&nbsp;</div>
-    <div>&nbsp;</div>
+    
     
     <button body className={style.button01}>ログイン</button>
   </div>
