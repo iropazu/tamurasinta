@@ -2,7 +2,7 @@ import React from 'react'
 import style from '../styles/Login.module.css'
 
 const Login = () => {
-  return <div className={style.main}><body className={style.body}>ログイン</body>
+  return <div className={style.main}><p className={style.body}>ログイン</p>
   
     <div><p className={style.p}>メールアドレス</p>
     <input type = "text" style={{width: 500, height: 30}}></input></div>
