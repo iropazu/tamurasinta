@@ -29,15 +29,10 @@ const MessageList = () => {
   return (
     <div className={styles.user_message}>
       {messages.map((message) => (
-        // <div key={message.id}>
-        //   <strong>{message.senderId}:</strong> {message.text}
-        // </div>
-        <div className={styles.message} key={message.id}>
-          {/* <img src={message.img} alt="sample1" /> */}
+        <div className={styles.messages} key={message.id}>
           <div className={styles.user_title}>
-            {/* <p>{message.name}</p> */}
             <span>{message.messageText}</span>
-            <span>{message.timestamp}</span>
+            <p>{message.timestamp}</p>
           </div>
         </div>
       ))}

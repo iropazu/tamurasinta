@@ -13,7 +13,6 @@ const Transaction = () => {
   const roomId = itemId
   const senderId = 'your_sender_id'
 
-  // チャットのメッセージを送信する関数
   const sendMessage = () => {
     const message = inputRef.current.value
     if (message.trim() === '') return
