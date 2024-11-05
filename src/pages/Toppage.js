@@ -16,11 +16,19 @@ const Toppage = () => {
     const itemsRef = collection(db, 'books')
 
     const fetchItems = async () => {
-      const itemSnapshot = await getDocs(itemsRef)
-      console.log('itemSnapshot', itemSnapshot)
-      itemSnapshot.forEach((doc) => {
-        setItems((prevItems) => [...prevItems, doc.data()])
-      })
+      try {
+        const itemSnapshot = await getDocs(itemsRef)
+        const itemsArray = itemSnapshot.docs
+          .map((doc) => doc.data())
+          .filter(
+            (item) =>
+              Array.isArray(item.bookImageUrl) && item.bookImageUrl.length > 0
+          )
+          .map((item) => item.bookImageUrl[0])
+        setItems(itemsArray)
+      } catch (error) {
+        alert('Error fetching items:', error)
+      }
     }
     fetchItems()
   }, [])
@@ -32,11 +40,9 @@ const Toppage = () => {
       <div className="in_transaction">
         <h5>取引中の商品</h5>
         <div className="img-container">
-          <img src={sample1} alt="sample1" className="sample-image" />
-          <img src={sample2} alt="sample2" className="sample-image" />
-          <img src={sample3} alt="sample3" className="sample-image" />
-          <img src={sample4} alt="sample4" className="sample-image" />
-          <img src={sample5} alt="sample5" className="sample-image" />
+          {items.map((item, index) => (
+            <img src={item} alt={`sample${index}`} className="sample-image" />
+          ))}
         </div>
       </div>
       <div className="subjects">
