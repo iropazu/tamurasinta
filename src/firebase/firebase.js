@@ -25,4 +25,3 @@ const googleProvider = new GoogleAuthProvider()
 // const analytics = getAnalytics(app);
 
 export { db, storage, realtimeDb, auth, googleProvider }
-
