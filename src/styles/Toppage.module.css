@@ -1,9 +1,9 @@
-.toppage-container {
+.toppage_container {
   margin: 20px;
   padding: 0;
 }
 
-.toppage-container h5 {
+.toppage_container h5 {
   margin-top: 25px;
   margin-bottom: 20px;
   font-size: 20px;
@@ -12,18 +12,20 @@
   line-height: 21px;
 }
 
-.img-container {
+.img_container {
   display: flex;
+  flex-wrap: wrap;
   gap: 40px;
   width: 100%;
   overflow: hidden;
   position: relative;
 }
 
-.sample-image {
-  width: 216px;
-  height: 261px;
+.sample_image {
+  width: 220px;
+  height: 260px;
   border-radius: 6px;
-  object-fit: cover;
+  object-fit: contain;
   box-shadow: 0px 4px 4px #4f4f4f40;
+  background-color: #f5f5f5;
 }
