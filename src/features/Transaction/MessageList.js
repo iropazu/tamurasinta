@@ -17,6 +17,7 @@ const MessageList = () => {
         const messageArray = Object.keys(data).map((key) => ({
           id: key,
           ...data[key],
+          formattedTimestamp: formatDate(data[key].timestamp),
         }))
         setMessages(messageArray)
       }
@@ -25,7 +26,16 @@ const MessageList = () => {
     return () => unsubscribe()
   }, [itemId])
 
-  console.log(messages)
+  const formatDate = (timestamp) => {
+    if (!timestamp) return '未設定'
+    const date = new Date(timestamp)
+    const y = date.getFullYear()
+    const m = String(date.getMonth() + 1).padStart(2, '0')
+    const d = String(date.getDate()).padStart(2, '0')
+    const h = String(date.getHours()).padStart(2, '0')
+    const min = String(date.getMinutes()).padStart(2, '0')
+    return `${y}/${m}/${d} ${h}:${min}`
+  }
 
   return (
     <div className={styles.user_message}>
@@ -33,12 +43,12 @@ const MessageList = () => {
         // <div key={message.id}>
         //   <strong>{message.senderId}:</strong> {message.text}
         // </div>
-        <div className={styles.message} key={message.id}>
+        <div className={styles.messages} key={message.id}>
           {/* <img src={message.img} alt="sample1" /> */}
           <div className={styles.user_title}>
             {/* <p>{message.name}</p> */}
             <span>{message.messageText}</span>
-            <span>{message.timestamp}</span>
+            <p>{message.formattedTimestamp}</p>
           </div>
         </div>
       ))}

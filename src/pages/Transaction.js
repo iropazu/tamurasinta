@@ -1,5 +1,5 @@
 import React from 'react'
-import { useRef } from 'react'
+import { useState, useRef } from 'react'
 import sample1 from '../assets/image/sample1.jpeg'
 import styles from '../styles/Transaction.module.css'
 import MessageList from '../features/Transaction/MessageList'
@@ -7,11 +7,21 @@ import SendIcon from '@mui/icons-material/Send'
 import { realtimeDb } from '../firebase/firebase'
 import { push, ref, serverTimestamp } from 'firebase/database'
 import { useParams } from 'react-router-dom'
+import { onAuthStateChanged } from 'firebase/auth'
+import { auth } from '../firebase/firebase'
 
 const Transaction = () => {
+  const [senderId, setSenderId] = useState(null)
+  onAuthStateChanged(auth, (user) => {
+    if (user) {
+      setSenderId(user.uid)
+    }
+    else {
+    }
+  })
+
   const { itemId } = useParams()
   const inputRef = useRef(null)
-  const senderId = 'your_sender_id'
 
   const sendMessage = () => {
     const message = inputRef.current.value
