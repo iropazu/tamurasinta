@@ -12,11 +12,15 @@ import { auth } from '../firebase/firebase'
 
 const Transaction = () => {
   const [senderId, setSenderId] = useState(null)
+  const [senderName, setSenderName] = useState(null)
+
   onAuthStateChanged(auth, (user) => {
     if (user) {
       setSenderId(user.uid)
-    }
-    else {
+      setSenderName(user.displayName)
+    } else {
+      setSenderId('unknown')
+      setSenderName('unknown')
     }
   })
 
@@ -30,6 +34,7 @@ const Transaction = () => {
     const sendmessagesRef = ref(realtimeDb, `rooms/${itemId}/messages`)
     push(sendmessagesRef, {
       senderId: senderId,
+      senderName: senderName,
       messageText: message,
       timestamp: serverTimestamp(),
     })

@@ -46,9 +46,11 @@ const MessageList = () => {
         <div className={styles.messages} key={message.id}>
           {/* <img src={message.img} alt="sample1" /> */}
           <div className={styles.user_title}>
-            {/* <p>{message.name}</p> */}
-            <span>{message.messageText}</span>
-            <p>{message.formattedTimestamp}</p>
+            <p>{message.senderName}</p>
+            <div className={styles.message}>
+              <span>{message.messageText}</span>
+              <p>{message.formattedTimestamp}</p>
+            </div>
           </div>
         </div>
       ))}
