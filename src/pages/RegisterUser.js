@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import style from '../styles/RegisterUser.module.css'
 import Button from '../components/Button/Button'
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew'
@@ -12,6 +12,8 @@ const RegisterUser = () => {
   const [number, setnumber] = useState('')
   const [major, setmajor] = useState('')
   const [grade, setGrade] = useState('')
+  const [profileImage,setProfileImage]=useState(null)
+  const inputRef=useRef()
   const navigate = useNavigate()
 
   useEffect(() => {
@@ -29,6 +31,7 @@ const RegisterUser = () => {
       studentId: number,
       major: major,
       grade: grade,
+      profileImage:profileImage
     }
     await addData(data)
     navigate('/')
@@ -43,6 +46,10 @@ const RegisterUser = () => {
         ></ArrowBackIosNewIcon>
       </Link>
       <form action="/" className={style.form}>
+        <div className="profileImage">
+          <button onClick={()=>{inputRef.current.click()}}></button>
+          <input type="file" onChange={(e)=>{setProfileImage(e.target.files[0])}} style={{display:'none'}}/>
+        </div>
         <div className="send_input">
           <label className={style.label}>名前</label>
           <input
