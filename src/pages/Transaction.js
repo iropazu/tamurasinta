@@ -1,9 +1,38 @@
 import React from 'react'
+import { useRef } from 'react'
 import sample1 from '../assets/image/sample1.jpeg'
 import styles from '../styles/Transaction.module.css'
+import MessageList from '../features/Transaction/MessageList'
 import SendIcon from '@mui/icons-material/Send'
+import { realtimeDb } from '../firebase/firebase'
+import { push, ref, serverTimestamp } from 'firebase/database'
 
 const Transaction = () => {
+  const inputRef = useRef(null)
+  const itemId = 'm73319947785'
+  const roomId = itemId
+  const senderId = 'your_sender_id'
+
+  // チャットのメッセージを送信する関数
+  const sendMessage = () => {
+    const message = inputRef.current.value
+    if (message.trim() === '') return
+
+    const sendmessagesRef = ref(realtimeDb, `rooms/${roomId}/messages`)
+    push(sendmessagesRef, {
+      senderId: senderId,
+      messageText: message,
+      timestamp: serverTimestamp(),
+    })
+      .then(() => {
+        alert('Message sent successfully!')
+        inputRef.current.value = ''
+      })
+      .catch((error) => {
+        alert('Error sending message:', error)
+      })
+  }
+
   return (
     <div className={styles.transaction_container}>
       <div className={styles.trading_information}>
@@ -33,18 +62,13 @@ const Transaction = () => {
         </div>
         <div>
           <h5>メッセージ</h5>
-          <div className={styles.user_message}>
-            <div className={styles.message}>
-              <img src={sample1} alt="sample1"></img>
-              <span>hogehogehoge</span>
-            </div>
+          <MessageList />
+          <div className={styles.send_container}>
+            <input className={styles.send} ref={inputRef} />
+            <button onClick={sendMessage}>
+              <SendIcon />
+            </button>
           </div>
-        </div>
-        <div className={styles.send_container}>
-          <input className={styles.send} />
-          <button>
-            <SendIcon className={styles.bt} />
-          </button>
         </div>
       </div>
     </div>

@@ -1,0 +1,141 @@
+.main h1 {
+  width: 200px;
+  margin: 40px auto 50px auto;
+  text-align: center;
+  color: #666666;
+}
+
+.main h2 {
+  color: #666666;
+}
+
+.main input {
+  width: 600px;
+  height: 35px;
+  border-radius: 6px;
+  border: 1px solid#767676;
+  padding: 5px;
+  padding-left: 10px;
+  box-sizing: border-box;
+  font-size: 17px;
+}
+
+.main p {
+  color: #666666;
+  margin: 10px 0 0 0;
+}
+
+.bigImageContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: rgba(173, 173, 173, 0.8);
+  z-index: 100;
+}
+
+.bigImageContainer img {
+  max-width: 500px;
+  max-height: calc(80vh);
+  margin: 70px 0 0 0;
+}
+
+.info_container {
+  width: 600px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: left;
+  gap: 30px;
+}
+
+.imageWrap {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 30px;
+}
+
+.containerImg {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 130px;
+  height: 130px;
+  background-color: #f5f5f5;
+  position: relative;
+}
+
+.containerImg img {
+  max-width: 100%;
+  max-height: 100%;
+  border-radius: 6px;
+}
+
+.containerImg button {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 30px;
+  font-size: 15px;
+}
+
+.image_field {
+  width: 600px;
+  height: 180px;
+  border: 1px dashed#333;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  margin: 20px 0 0 0;
+}
+
+.image_field p {
+  color: #85b6ff;
+  margin: 0 0 10 0px;
+}
+
+.image_field .camera {
+  font-size: 50px !important;
+  color: #85b6ff;
+  margin: 10px 0 0 0;
+}
+
+.image_field button {
+  width: 150px;
+}
+
+.info_field textarea {
+  width: 602.33px;
+  border-radius: 6px;
+  border: 1px solid#666666;
+  resize: none;
+  padding: 10px;
+  box-sizing: border-box;
+  overflow: hidden;
+  font-size: 17px;
+}
+.info_field select {
+  width: 602.33px;
+  height: 40.33px;
+  border-radius: 6px;
+  border: 1px solid#666666;
+  box-sizing: border-box;
+  padding: 5px;
+  font-size: 17px;
+}
+
+.Button {
+  display: block;
+  margin: 50px auto 50px auto;
+  width: 159px;
+  height: 46px;
+}
+
+.errorP {
+  color: #d41c1c !important;
+}
