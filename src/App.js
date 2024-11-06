@@ -23,8 +23,8 @@ function App() {
             <Route path="/transaction" element={<Transaction />} />
             <Route path="/register-user" element={<RegisterUser />} />
             <Route path="/register" element={<Register />} />
-            <Route path='/create-listing' element={<CreateListing/>}/>
-            <Route path='/product-detail/:id' element={<ProductDetail/>}/>
+            <Route path="/create-listing" element={<CreateListing />} />
+            <Route path="/product-detail/:id" element={<ProductDetail />} />
           </Routes>
         </main>
         <Footer />

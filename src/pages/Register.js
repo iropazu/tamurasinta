@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from 'react'
 import style from '../styles/RegisterUser.module.css'
 import Button from '../components/Button/Button'
