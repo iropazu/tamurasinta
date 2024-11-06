@@ -2,13 +2,14 @@ import React, { useEffect, useState } from 'react'
 import styles from '../../styles/Transaction.module.css'
 import { realtimeDb } from '../../firebase/firebase'
 import { ref, onValue } from 'firebase/database'
+import { useParams } from 'react-router-dom'
 
 const MessageList = () => {
-  const roomId = 'm73319947785'
+  const { itemId } = useParams()
   const [messages, setMessages] = useState([])
 
   useEffect(() => {
-    const getmessageRef = ref(realtimeDb, `rooms/${roomId}/messages`)
+    const getmessageRef = ref(realtimeDb, `rooms/${itemId}/messages`)
 
     const unsubscribe = onValue(getmessageRef, (snapshot) => {
       const data = snapshot.val()
@@ -22,7 +23,7 @@ const MessageList = () => {
     })
 
     return () => unsubscribe()
-  }, [roomId])
+  }, [itemId])
 
   console.log(messages)
 

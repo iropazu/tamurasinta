@@ -6,19 +6,18 @@ import MessageList from '../features/Transaction/MessageList'
 import SendIcon from '@mui/icons-material/Send'
 import { realtimeDb } from '../firebase/firebase'
 import { push, ref, serverTimestamp } from 'firebase/database'
+import { useParams } from 'react-router-dom'
 
 const Transaction = () => {
+  const { itemId } = useParams()
   const inputRef = useRef(null)
-  const itemId = 'm73319947785'
-  const roomId = itemId
   const senderId = 'your_sender_id'
 
-  // チャットのメッセージを送信する関数
   const sendMessage = () => {
     const message = inputRef.current.value
     if (message.trim() === '') return
 
-    const sendmessagesRef = ref(realtimeDb, `rooms/${roomId}/messages`)
+    const sendmessagesRef = ref(realtimeDb, `rooms/${itemId}/messages`)
     push(sendmessagesRef, {
       senderId: senderId,
       messageText: message,
