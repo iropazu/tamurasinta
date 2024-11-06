@@ -1,5 +1,5 @@
 import { auth, db, googleProvider } from '../firebase/firebase'
-import { collection, doc, setDoc } from 'firebase/firestore'
+import { collection, doc, getDoc, setDoc } from 'firebase/firestore'
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
@@ -25,15 +25,22 @@ export const signUp = async (email, password) => {
   }
 }
 
-export const GoogleSignUp = async () => {
+export const GoogleAuth  = async () => {
+
   try {
     const result = await signInWithPopup(auth, googleProvider)
     const user = result.user
 
-    await setDoc(doc(collection(db, 'users'), user.uid), {
-      mail: user.email,
-      timeData: new Date(),
-    })
+    const docRef=doc(collection(db,'user'),user.uid)
+    const userDoc=await getDoc(docRef)
+
+    if (!userDoc.exists()){
+      await setDoc(doc(collection(db, 'users'), user.uid), {
+        mail: user.email,
+        timeData: new Date(),
+      })
+    }else {
+    }
   } catch (error) {
     throw error
   }
