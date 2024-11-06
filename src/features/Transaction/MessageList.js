@@ -40,9 +40,6 @@ const MessageList = () => {
   return (
     <div className={styles.user_message}>
       {messages.map((message) => (
-        // <div key={message.id}>
-        //   <strong>{message.senderId}:</strong> {message.text}
-        // </div>
         <div className={styles.messages} key={message.id}>
           <img src={message.img} alt="icon" />
           <div className={styles.user_title}>
