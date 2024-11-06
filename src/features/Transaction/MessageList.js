@@ -44,7 +44,7 @@ const MessageList = () => {
         //   <strong>{message.senderId}:</strong> {message.text}
         // </div>
         <div className={styles.messages} key={message.id}>
-          {/* <img src={message.img} alt="sample1" /> */}
+          <img src={message.img} alt="icon" />
           <div className={styles.user_title}>
             <p>{message.senderName}</p>
             <div className={styles.message}>

@@ -13,16 +13,20 @@ import { auth } from '../firebase/firebase'
 const Transaction = () => {
   const [senderId, setSenderId] = useState(null)
   const [senderName, setSenderName] = useState(null)
+  const [senderImg, setSenderImg] = useState(null)
 
   onAuthStateChanged(auth, (user) => {
     if (user) {
       setSenderId(user.uid)
       setSenderName(user.displayName)
+      setSenderImg(user.photoURL)
     } else {
       setSenderId('unknown')
       setSenderName('unknown')
     }
   })
+
+  console.log('senderId', senderImg)
 
   const { itemId } = useParams()
   const inputRef = useRef(null)
@@ -35,6 +39,7 @@ const Transaction = () => {
     push(sendmessagesRef, {
       senderId: senderId,
       senderName: senderName,
+      img: senderImg,
       messageText: message,
       timestamp: serverTimestamp(),
     })

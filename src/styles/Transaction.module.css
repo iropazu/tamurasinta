@@ -128,14 +128,14 @@
   gap: 5px;
 }
 
-.messages span {
+.message span {
   color: #333333;
   font-size: 15px;
   font-weight: 400;
   line-height: 21px;
 }
 
-.messages p {
+.message p {
   color: #666666;
   font-size: 12px;
   line-height: 12px;
