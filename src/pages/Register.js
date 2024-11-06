@@ -1,3 +1,4 @@
+
 import React, { useEffect, useState } from 'react'
 import style from '../styles/RegisterUser.module.css'
 import Button from '../components/Button/Button'
@@ -48,7 +49,7 @@ const Register = () => {
         return
       }
       await signUp(mail, password)
-      navigate('/RegisterUser')
+      navigate('/register-user')
     } catch (error) {
       if (error.code === 'auth/email-already-in-use') {
         setError('既に登録済みのメールアドレスだよ')
@@ -62,7 +63,7 @@ const Register = () => {
   const handleGoogleSignUp = async () => {
     try {
       await GoogleSignUp()
-      navigate('/RegisterUser')
+      navigate('/register-user')
     } catch (error) {
       console.log(error)
     }
