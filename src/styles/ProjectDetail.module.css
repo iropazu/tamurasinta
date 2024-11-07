@@ -1,0 +1,124 @@
+.thumbnail {
+    width: 300px;  
+    height: 300px; 
+    object-fit: cover;
+    transition: all 0.3s ease;
+    border: 2px solid transparent;
+    cursor: pointer;
+  }
+  
+  .thumbnail:hover {
+    border-color: #4a90e2;
+  }
+  
+  .mainImage {
+    transition: all 0.3s ease;
+    height: 600px;
+    width: 600px;
+    object-fit: contain;
+    margin-left: 50px;
+    display: block;
+    max-width: 100%;
+  }
+  
+  .thumbnailContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 10px;
+    width: 320px;
+    margin-top: 20px;
+  }
+
+  .imageContainer {
+    display: flex;
+    flex-direction: row;  
+    align-items: flex-start;  
+    padding: 20px;
+    gap: 20px;
+}
+
+  .user_information {
+    padding: 10px;
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+  
+  .user_information img,
+  .user_message img {
+    border-radius: 100%;
+    width: 45px;
+    height: 45px;
+    object-fit: cover;
+    box-shadow: 0px 4px 4px #4f4f4f40;
+  }
+
+.imageAndInfoContainer {
+    display: flex;
+    flex-direction: row;
+    gap: 40px; 
+    padding: 20px;
+    max-width: 1400px; 
+    margin: 0 auto;
+}
+
+
+.buttonContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin: 20px 0;
+  width: 100%;
+}
+
+.actionButtons {
+  display: flex;
+  gap: 12px;
+  width: 100%;
+}
+
+.actionButton {
+  flex: 1;
+  padding: 12px 16px;
+  border-radius: 4px;
+  border: 1px solid #ddd;
+  background-color: #f0f0f0;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  min-width: 140px; 
+  text-align: center; 
+  white-space: nowrap;
+  font-size: 14px;
+  color: black;
+}
+
+.actionButton:hover {
+  background-color: #e0e0e0;
+}
+
+.purchaseButton {
+  width: 100%;
+  padding: 12px;
+  background-color: #4a90e2;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: bold;
+  transition: all 0.3s ease;
+}
+
+.purchaseButton:hover {
+  background-color: #357abd;
+}
+
+
+.price {
+  font-size: 24px;
+  font-weight: bold;
+  margin: 16px 0;
+}
+
