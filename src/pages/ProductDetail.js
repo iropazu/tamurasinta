@@ -94,7 +94,7 @@ const ProductDetail = () => {
           <h3>商品の説明</h3>
           <p>{productData.descript}</p>
           <h3>商品の状態</h3>
-          <p>{productData.state}</p>
+          <p>{productData?.itemCondition || '不明'}</p>
           <h3>出品者</h3>
           <div className={styles.user_information}>
             <img 
