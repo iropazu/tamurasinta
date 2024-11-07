@@ -12,12 +12,9 @@ const ProductDetail = () => {
   const [userData, setUserData] = useState(null)
   const [isLoading, setIsLoading] = useState(true)
 
-  console.log('id:', itemId)
-
   useEffect(() => {
     const fetchData = async () => {
       try {
-        // 商品データの取得
         const productDocRef = doc(db, 'books', itemId)
         const productDocSnap = await getDoc(productDocRef)
 
@@ -25,7 +22,6 @@ const ProductDetail = () => {
           const data = productDocSnap.data()
           setProductData(data)
 
-          // 初期画像の設定
           if (
             Array.isArray(data.bookImageUrl) &&
             data.bookImageUrl.length > 0
@@ -33,7 +29,6 @@ const ProductDetail = () => {
             setSelectedImage(data.bookImageUrl[0])
           }
 
-          // ユーザーデータの取得
           if (data.userId) {
             const userDocRef = doc(db, 'users', data.userId)
             const userDocSnap = await getDoc(userDocRef)
@@ -43,7 +38,7 @@ const ProductDetail = () => {
             }
           }
         }
-        setIsLoading(false) // データ取得が完了したらローディング解除
+        setIsLoading(false)
       } catch (error) {
         console.error('Error fetching data:', error)
         setIsLoading(false)
@@ -59,7 +54,6 @@ const ProductDetail = () => {
     return <div>Loading...</div>
   }
 
-  // productDataが取得されなかった場合のエラーメッセージ
   if (!productData) {
     return <div>商品情報が見つかりません</div>
   }
@@ -73,7 +67,6 @@ const ProductDetail = () => {
   return (
     <div className={styles.imageAndInfoContainer}>
       <div className={styles.imageContainer}>
-        {/* 左側のサムネイル列 */}
         <div className={styles.thumbnailContainer}>
           {thumbnails.map((thumb) => (
             <img
@@ -86,7 +79,6 @@ const ProductDetail = () => {
           ))}
         </div>
 
-        {/* メイン画像表示エリア */}
         <img
           src={selectedImage}
           alt="選択された商品画像"
