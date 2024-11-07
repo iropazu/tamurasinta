@@ -1,6 +1,6 @@
 .thumbnail {
-    width: 300px;  
-    height: 300px; 
+    width: 150px;  
+    height: 150px; 
     object-fit: cover;
     transition: all 0.3s ease;
     border: 2px solid transparent;

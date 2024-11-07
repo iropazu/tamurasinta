@@ -1,19 +1,49 @@
-import React, { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
-import sample1 from '../assets/image/sample1.jpeg'
-import sample2 from '../assets/image/sample2.jpeg'
+import React, { useState, useEffect } from 'react'
+import { useNavigate, useParams } from 'react-router-dom'  
+import { db } from '../firebase/firebase'
+import { doc, getDoc } from 'firebase/firestore'  
 import styles from '../styles/ProductDetail.module.css'
 
 const ProductDetail = () => {
-
   const navigate = useNavigate()
-  const [selectedImage, setSelectedImage] = useState(sample1)
-  
-  
-  const thumbnails = [
-    { id: 1, src: sample1, alt: "商品画像1" },
-    { id: 2, src: sample2, alt: "商品画像2" }
-  ]
+  const { id } = useParams()  // URLからidを取得
+  const [productData, setProductData] = useState(null)
+  const [selectedImage, setSelectedImage] = useState(null)
+
+  useEffect(() => {
+    const fetchProductData = async () => {
+      try {
+        const docRef = doc(db, 'books', id)
+        const docSnap = await getDoc(docRef)
+        
+        if (docSnap.exists()) {
+          const data = docSnap.data()
+          setProductData(data)
+          // 最初の画像をselectedImageとして設定
+          if (Array.isArray(data.bookImageUrl) && data.bookImageUrl.length > 0) {
+            setSelectedImage(data.bookImageUrl[0])
+          }
+        }
+      } catch (error) {
+        console.error("Error fetching product data:", error)
+      }
+    }
+
+    if (id) {
+      fetchProductData()
+    }
+  }, [id])
+
+  // データが読み込まれるまでローディング表示
+  if (!productData) {
+    return <div>Loading...</div>
+  }
+
+  const thumbnails = productData.bookImageUrl.map((url, index) => ({
+    id: index + 1,
+    src: url,
+    alt: `商品画像${index + 1}`
+  }))
 
   return (
     <div className={styles.imageAndInfoContainer}>
@@ -38,8 +68,8 @@ const ProductDetail = () => {
             className={styles.mainImage}
           />
         <div className={styles.information}>
-          <h1>タイトル</h1>
-          <p>¥1000</p>
+        <h1>{productData.name}</h1>
+          <p>¥{productData.price}</p>
           <div className={styles.buttonContainer}>
             <div className={styles.actionButtons}>
               <button className={styles.actionButton}>💙いいね</button>
@@ -50,12 +80,12 @@ const ProductDetail = () => {
             </button>
           </div>
           <h3>商品の説明</h3>
-          <p>これはテストです。</p>
+          <p>{productData.descript}</p>
           <h3>商品の状態</h3>
           <p>新品</p>
           <h3>出品者</h3>
           <div className={styles.user_information}>
-            <img src={sample1} alt="sample1"></img>
+            <img src={productData.userImage || thumbnails[1].src} alt="ユーザー画像" />
             <p>name</p>
           </div>
         </div>
