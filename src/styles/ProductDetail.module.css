@@ -81,7 +81,6 @@
 
 .actionButton {
   flex: 1;
-  padding: 12px 16px;
   border-radius: 4px;
   border: 1px solid #ddd;
   background-color: #f0f0f0;
@@ -92,6 +91,7 @@
   white-space: nowrap;
   font-size: 14px;
   color: black;
+  height: 30px;
 }
 
 .actionButton:hover {
@@ -100,7 +100,6 @@
 
 .purchaseButton {
   width: 100%;
-  padding: 12px;
   background-color: #4a90e2;
   color: white;
   border: none;
