@@ -25,21 +25,20 @@ export const signUp = async (email, password) => {
   }
 }
 
-export const GoogleAuth  = async () => {
-
+export const GoogleAuth = async () => {
   try {
     const result = await signInWithPopup(auth, googleProvider)
     const user = result.user
 
-    const docRef=doc(collection(db,'user'),user.uid)
-    const userDoc=await getDoc(docRef)
+    const docRef = doc(collection(db, 'user'), user.uid)
+    const userDoc = await getDoc(docRef)
 
-    if (!userDoc.exists()){
+    if (!userDoc.exists()) {
       await setDoc(doc(collection(db, 'users'), user.uid), {
         mail: user.email,
         timeData: new Date(),
       })
-    }else {
+    } else {
     }
   } catch (error) {
     throw error

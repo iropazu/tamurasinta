@@ -53,7 +53,7 @@ const Transaction = () => {
         inputRef.current.value = ''
       })
       .catch((error) => {
-        alert('Error sending message:もう一度お試しください', error)
+        alert('もう一度お試しください', error)
       })
   }
 
@@ -75,7 +75,7 @@ const Transaction = () => {
         } else {
         }
       } catch (error) {
-        alert('Error fetching items:', error)
+        window.location.reload()
       }
     }
 

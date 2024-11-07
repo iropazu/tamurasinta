@@ -54,13 +54,7 @@ const MessageList = () => {
       ) : (
         messages.map((message) => (
           <div className={styles.messages} key={message.id}>
-            <img
-              src={
-                message.img ||
-                noImg
-              }
-              alt=""
-            />
+            <img src={message.img || noImg} alt="" />
             <div className={styles.user_title}>
               <p>{message.senderName || 'unknown'}</p>
               <div className={styles.message}>
