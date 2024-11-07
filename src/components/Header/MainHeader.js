@@ -8,29 +8,48 @@ import noImg from '../../assets/image/noImg.jpg'
 import { Link } from 'react-router-dom'
 import { onAuthStateChanged } from 'firebase/auth'
 import { auth, db } from '../../firebase/firebase'
-import { doc, onSnapshot } from 'firebase/firestore'
+import { doc, getDoc, onSnapshot } from 'firebase/firestore'
 import { logout } from '../../services/authService'
 
 const MainHeader = () => {
 
   const [imageProfile,setImageProfile]=useState(null)
 
-  useEffect(()=>{
-    let snapUnsubscribe
-    const authUnsubscribe=onAuthStateChanged(auth,(user)=>{
-      user 
-      ? onSnapshot(doc(db, 'users', user.uid), (snap) => {
-          setImageProfile(
-            snap.data()?.profileImage || user.photoURL || noImg
-          );
-        })
-      : setImageProfile(noImg);
-    })
-    return ()=>{
-      authUnsubscribe()
-      if(snapUnsubscribe) snapUnsubscribe()
+
+  // onSnapshotバージョン
+  // useEffect(()=>{
+  //   let snapUnsubscribe
+  //   const authUnsubscribe=onAuthStateChanged(auth,(user)=>{
+  //     user 
+  //     ? onSnapshot(doc(db, 'users', user.uid), (snap) => {
+  //         setImageProfile(
+  //           snap.data()?.profileImage || user.photoURL || noImg
+  //         );
+  //       })
+  //     : setImageProfile(noImg);
+  //   })
+  //   return ()=>{
+  //     authUnsubscribe()
+  //     if(snapUnsubscribe) snapUnsubscribe()
+  //     }
+  // },[])
+
+  
+  // getDocバージョン
+  useEffect(() => {
+    const authUnsubscribe = onAuthStateChanged(auth, async (user) => {
+      if (user) {
+        const docRef = doc(db, 'users', user.uid);
+        const snap = await getDoc(docRef);
+        setImageProfile(snap.exists() && snap.data()?.profileImage || user.photoURL || noImg);
+      } else {
+        setImageProfile(noImg);
       }
-  },[])
+    });
+    return () => {
+      authUnsubscribe();
+    };
+  }, []);
   
 
   return (
