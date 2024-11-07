@@ -7,22 +7,37 @@ import NotificationsIcon from '@mui/icons-material/Notifications'
 import noImg from '../../assets/image/noImg.jpg'
 import { Link } from 'react-router-dom'
 import { onAuthStateChanged } from 'firebase/auth'
-import { auth } from '../../firebase/firebase'
+import { auth, db } from '../../firebase/firebase'
+import { collection, doc, onSnapshot } from 'firebase/firestore'
 
 const MainHeader = () => {
 
   const [imageProfile,setImageProfile]=useState(null)
 
   useEffect(()=>{
-    const unsubscribe=onAuthStateChanged(auth,(user)=>{
+    let snapUnsubscribe
+    const authUnsubscribe=onAuthStateChanged(auth,(user)=>{
       if (user){
-        setImageProfile(user?.photoURL)
+        const docRef=doc(collection(db,'users'),user.uid)
+        snapUnsubscribe=onSnapshot(docRef,(snap)=>{
+          if(snap.data().profileImage){
+            setImageProfile(snap.data().profileImage)
+          } else if (user.photoURL){
+            setImageProfile(user.photoURL)
+          } else{
+            setImageProfile(noImg)
+          }
+        })
       } else {
         setImageProfile(noImg)
       }
     })
-    return ()=>unsubscribe();
+    return ()=>{
+      if(authUnsubscribe) authUnsubscribe()
+      if(snapUnsubscribe) snapUnsubscribe()
+      }
   },[])
+  
 
   return (
     <header className="main-header-container">
