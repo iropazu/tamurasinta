@@ -4,6 +4,7 @@ import { db } from '../firebase/firebase'
 import { doc, getDoc } from 'firebase/firestore'
 import styles from '../styles/ProductDetail.module.css'
 import Loading from '../components/Loading/Loading'
+import Button from '../components/Button/Button'
 
 const ProductDetail = () => {
   const navigate = useNavigate()
@@ -68,6 +69,7 @@ const ProductDetail = () => {
   return (
     <div className={styles.imageAndInfoContainer}>
       <div className={styles.imageContainer}>
+
         <div className={styles.thumbnailContainer}>
           {thumbnails.map((thumb) => (
             <img
@@ -79,12 +81,13 @@ const ProductDetail = () => {
             />
           ))}
         </div>
-
+        
         <img
           src={selectedImage}
           alt="選択された商品画像"
           className={styles.mainImage}
         />
+
         <div className={styles.information}>
           <h1>{productData.name}</h1>
           <p>¥{productData.price}</p>
@@ -93,12 +96,12 @@ const ProductDetail = () => {
               <button className={styles.actionButton}>💙いいね</button>
               <button className={styles.actionButton}>💬メッセージ</button>
             </div>
-            <button
+            <Button
               className={styles.purchaseButton}
               onClick={() => navigate('/transaction')}
             >
               購入手続きへ
-            </button>
+            </Button>
           </div>
           <h3>商品の説明</h3>
           <p>{productData.descript}</p>
@@ -113,6 +116,8 @@ const ProductDetail = () => {
             <p>{userData?.name || 'Unknown User'}</p>
           </div>
         </div>
+
+
       </div>
     </div>
   )
