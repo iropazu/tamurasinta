@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
-import { db } from '../firebase/firebase'
-import { doc, getDoc } from 'firebase/firestore'
+import { db, auth } from '../firebase/firebase'
+import { setDoc, doc, getDoc } from 'firebase/firestore'
 import styles from '../styles/ProductDetail.module.css'
 import Loading from '../components/Loading/Loading'
 import Button from '../components/Button/Button'
+import { serverTimestamp } from 'firebase/firestore'
+import { onAuthStateChanged } from 'firebase/auth'
 
 const ProductDetail = () => {
   const navigate = useNavigate()
@@ -13,6 +15,17 @@ const ProductDetail = () => {
   const [selectedImage, setSelectedImage] = useState(null)
   const [userData, setUserData] = useState(null)
   const [isLoading, setIsLoading] = useState(true)
+
+  const [buyerId, setBuyerId] = useState('unknown')
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (user) {
+        setBuyerId(user.uid)
+      }
+    })
+    return unsubscribe
+  }, [])
 
   useEffect(() => {
     const fetchData = async () => {
@@ -66,10 +79,24 @@ const ProductDetail = () => {
     alt: `商品画像${index + 1}`,
   }))
 
+  // 購入手続きボタンを押したときの処理
+  const handlebuyButton = async () => {
+    try {
+      const buyerInfoRef = doc(db, 'books', itemId, 'buyerInfo', itemId)
+      const buyerData = {
+        buyerId: buyerId,
+        timestamp: serverTimestamp(),
+      }
+      await setDoc(buyerInfoRef, buyerData)
+    } catch (error) {
+      console.error('Error adding household info:', error)
+    }
+    navigate(`/transaction/${itemId}`)
+  }
+
   return (
     <div className={styles.imageAndInfoContainer}>
       <div className={styles.imageContainer}>
-
         <div className={styles.thumbnailContainer}>
           {thumbnails.map((thumb) => (
             <img
@@ -81,7 +108,7 @@ const ProductDetail = () => {
             />
           ))}
         </div>
-        
+
         <img
           src={selectedImage}
           alt="選択された商品画像"
@@ -96,10 +123,7 @@ const ProductDetail = () => {
               <button className={styles.actionButton}>💙いいね</button>
               <button className={styles.actionButton}>💬メッセージ</button>
             </div>
-            <Button
-              className={styles.purchaseButton}
-              onClick={() => navigate('/transaction')}
-            >
+            <Button className={styles.purchaseButton} onClick={handlebuyButton}>
               購入手続きへ
             </Button>
           </div>
@@ -116,8 +140,6 @@ const ProductDetail = () => {
             <p>{userData?.name || 'Unknown User'}</p>
           </div>
         </div>
-
-
       </div>
     </div>
   )
