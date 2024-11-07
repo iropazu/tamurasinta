@@ -3,6 +3,7 @@ import { useNavigate, useParams } from 'react-router-dom'
 import { db } from '../firebase/firebase'
 import { doc, getDoc } from 'firebase/firestore'
 import styles from '../styles/ProductDetail.module.css'
+import Loading from '../components/Loading/Loading'
 
 const ProductDetail = () => {
   const navigate = useNavigate()
@@ -51,7 +52,7 @@ const ProductDetail = () => {
   }, [itemId])
 
   if (isLoading) {
-    return <div>Loading...</div>
+    return <Loading />
   }
 
   if (!productData) {
