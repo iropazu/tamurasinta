@@ -1,5 +1,5 @@
 import React from 'react'
-import { useState, useRef } from 'react'
+import { useState, useRef, useEffect } from 'react'
 import sample1 from '../assets/image/sample1.jpeg'
 import styles from '../styles/Transaction.module.css'
 import MessageList from '../features/Transaction/MessageList'
@@ -8,32 +8,38 @@ import { realtimeDb } from '../firebase/firebase'
 import { push, ref, serverTimestamp } from 'firebase/database'
 import { useParams } from 'react-router-dom'
 import { onAuthStateChanged } from 'firebase/auth'
-import { auth } from '../firebase/firebase'
+import { auth, db } from '../firebase/firebase'
+import { doc, getDoc } from 'firebase/firestore'
 
 const Transaction = () => {
   const [senderId, setSenderId] = useState(null)
   const [senderName, setSenderName] = useState(null)
   const [senderImg, setSenderImg] = useState(null)
+  const [itemDetail, setItemDetail] = useState([])
 
-  onAuthStateChanged(auth, (user) => {
-    if (user) {
-      setSenderId(user.uid)
-      setSenderName(user.displayName)
-      setSenderImg(user.photoURL)
-    } else {
-      setSenderId('unknown')
-      setSenderName('unknown')
-    }
-  })
-
-  console.log('senderId', senderImg)
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (user) {
+        setSenderId(user.uid)
+        setSenderName(user.displayName)
+        setSenderImg(user.photoURL)
+      } else {
+        setSenderId('unknown')
+        setSenderName('unknown')
+      }
+    })
+    return unsubscribe
+  }, [])
 
   const { itemId } = useParams()
   const inputRef = useRef(null)
 
   const sendMessage = () => {
     const message = inputRef.current.value
-    if (message.trim() === '') return
+    if (message.trim() === '') {
+      alert('メッセージを入力してください')
+      return
+    }
 
     const sendmessagesRef = ref(realtimeDb, `rooms/${itemId}/messages`)
     push(sendmessagesRef, {
@@ -58,23 +64,43 @@ const Transaction = () => {
     }
   }
 
+  useEffect(() => {
+    const itemDetailRef = doc(db, 'books', itemId)
+
+    const fetchItems = async () => {
+      try {
+        const itemSnapshot = await getDoc(itemDetailRef)
+        if (itemSnapshot.exists()) {
+          setItemDetail(itemSnapshot.data())
+        } else {
+        }
+      } catch (error) {
+        alert('Error fetching items:', error)
+      }
+    }
+
+    fetchItems()
+  }, [itemId])
+
   return (
     <div className={styles.transaction_container}>
       <div className={styles.trading_information}>
         <h5>取引情報</h5>
+
         <div className={styles.item_title}>
-          <img src={sample1} alt="sample1"></img>
-          <p>タイトル</p>
+          <img src={itemDetail.bookImageUrl} alt="sample1" />
+          <p>{itemDetail.descript}</p>
         </div>
+
         <div className={styles.item_detail}>
           <div className={styles.inf}>
-            商品代金<p>￥1000</p>
+            商品代金<p>￥{itemDetail.price}</p>
           </div>
           <div className={styles.inf}>
             購入日時<p>2024年10月23日 17:51</p>
           </div>
           <div className={styles.inf}>
-            商品ID<p>m73319947785</p>
+            商品ID<p>{itemId}</p>
           </div>
         </div>
       </div>
