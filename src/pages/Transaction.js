@@ -52,6 +52,13 @@ const Transaction = () => {
       })
   }
 
+  const handleKeyDown = (e) => {
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault()
+      sendMessage()
+    }
+  }
+
   return (
     <div className={styles.transaction_container}>
       <div className={styles.trading_information}>
@@ -83,7 +90,12 @@ const Transaction = () => {
           <h5>メッセージ</h5>
           <MessageList />
           <div className={styles.send_container}>
-            <input className={styles.send} ref={inputRef} />
+            <textarea
+              className={styles.send}
+              ref={inputRef}
+              onKeyDown={handleKeyDown}
+              placeholder={`メッセージを入力\nShift + Enter で改行`}
+            />
             <button onClick={sendMessage}>
               <SendIcon />
             </button>
