@@ -5,22 +5,18 @@ import styles from '../styles/Transaction.module.css'
 import MessageList from '../features/Transaction/MessageList'
 import SendIcon from '@mui/icons-material/Send'
 import { realtimeDb } from '../firebase/firebase'
-import { push, ref, serverTimestamp } from 'firebase/database'
+import { push, ref } from 'firebase/database'
 import { useParams } from 'react-router-dom'
 import { onAuthStateChanged } from 'firebase/auth'
 import { auth, db } from '../firebase/firebase'
-import { doc, getDoc } from 'firebase/firestore'
-import { useContext } from 'react'
-import { ProductContext } from '../context/ProductContext'
-import { UserContext } from '../context/UserContext'
+import { collection, doc, getDoc, getDocs } from 'firebase/firestore'
+import formatDate from '../utils/formatDate'
 
 const Transaction = () => {
   const [senderId, setSenderId] = useState(null)
   const [senderName, setSenderName] = useState(null)
   const [senderImg, setSenderImg] = useState(null)
   const [itemDetail, setItemDetail] = useState([])
-  const { productData } = useContext(ProductContext)
-  const { userData } = useContext(UserContext)
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
@@ -52,7 +48,7 @@ const Transaction = () => {
       senderName: senderName,
       img: senderImg,
       messageText: message,
-      timestamp: serverTimestamp(),
+      timestamp: new Date(),
     })
       .then(() => {
         inputRef.current.value = ''
@@ -69,26 +65,45 @@ const Transaction = () => {
     }
   }
 
+  const [userDetail, setUserDetail] = useState([])
   useEffect(() => {
-    const itemDetailRef = doc(db, 'books', itemId)
+    const fetchData = async () => {
+      const itemDetailRef = doc(db, 'books', itemId)
+      const buyDateRef = doc(db, 'books', itemId, 'buyerInfo', itemId)
 
-    const fetchItems = async () => {
       try {
-        const itemSnapshot = await getDoc(itemDetailRef)
+        const [itemSnapshot, buyDateSnap] = await Promise.all([
+          getDoc(itemDetailRef),
+          getDoc(buyDateRef),
+        ])
+
         if (itemSnapshot.exists()) {
-          setItemDetail(itemSnapshot.data())
-        } else {
+          const itemDetailData = itemSnapshot.data()
+          setItemDetail(itemDetailData)
+
+          if (itemDetailData.userId) {
+            const userRef = doc(db, 'users', itemDetailData.userId)
+            const userSnapshot = await getDoc(userRef)
+
+            if (userSnapshot.exists()) {
+              setUserDetail(userSnapshot.data())
+            }
+          }
+        }
+
+        if (buyDateSnap.exists()) {
+          const buyDateData = buyDateSnap.data()
+          setBuyDate(formatDate(buyDateData.timestamp))
         }
       } catch (error) {
-        window.location.reload()
+        console.error('データの取得に失敗しました:', error)
       }
     }
 
-    fetchItems()
+    fetchData()
   }, [itemId])
 
-  console.log(userData)
-  console.log(productData)
+  const [buyDate, setBuyDate] = useState(null)
 
   return (
     <div className={styles.transaction_container}>
@@ -97,15 +112,16 @@ const Transaction = () => {
 
         <div className={styles.item_title}>
           <img src={itemDetail.bookImageUrl} alt="sample1" />
-          <p>{productData.descript}</p>
+          <p>{itemDetail.itemName}</p>
         </div>
 
         <div className={styles.item_detail}>
           <div className={styles.inf}>
-            商品代金<p>￥{productData.price}</p>
+            商品代金<p>￥{itemDetail.price}</p>
           </div>
           <div className={styles.inf}>
-            購入日時<p>2024年10月23日 17:51</p>
+            購入日時
+            <p>{buyDate}</p>
           </div>
           <div className={styles.inf}>
             商品ID<p>{itemId}</p>
@@ -116,11 +132,8 @@ const Transaction = () => {
         <h2>取引画面</h2>
         <h5>出品者情報</h5>
         <div className={styles.user_information}>
-          <img
-            src={userData.profileImage?.profileImage || noImg}
-            alt="sample1"
-          ></img>
-          <p>{userData.name}</p>
+          <img src={userDetail.profileImage || noImg} alt="sample1"></img>
+          <p>{userDetail.name}</p>
         </div>
         <div>
           <h5>メッセージ</h5>

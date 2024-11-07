@@ -1,22 +1,18 @@
 import React, { useState, useEffect } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { db, auth } from '../firebase/firebase'
-import { setDoc, doc, getDoc } from 'firebase/firestore'
+import { setDoc, doc, getDoc, serverTimestamp } from 'firebase/firestore'
 import styles from '../styles/ProductDetail.module.css'
 import Loading from '../components/Loading/Loading'
 import Button from '../components/Button/Button'
-import { serverTimestamp } from 'firebase/firestore'
 import { onAuthStateChanged } from 'firebase/auth'
-import { useContext } from 'react'
-import { ProductContext } from '../context/ProductContext'
-import { UserContext } from '../context/UserContext'
 
 const ProductDetail = () => {
   const navigate = useNavigate()
   const { itemId } = useParams()
-  const { productData, setProductData } = useContext(ProductContext)
+  const [productData, setProductData] = useState(null)
   const [selectedImage, setSelectedImage] = useState(null)
-  const { userData, setUserData } = useContext(UserContext)
+  const [userData, setUserData] = useState(null)
   const [isLoading, setIsLoading] = useState(true)
 
   const [buyerId, setBuyerId] = useState('unknown')
@@ -97,8 +93,6 @@ const ProductDetail = () => {
     navigate(`/transaction/${itemId}`)
   }
 
-  console.log('userData', userData)
-
   return (
     <div className={styles.imageAndInfoContainer}>
       <div className={styles.imageContainer}>
@@ -121,7 +115,7 @@ const ProductDetail = () => {
         />
 
         <div className={styles.information}>
-          <h1>{productData.name}</h1>
+          <h1>{productData.itemName}</h1>
           <p>¥{productData.price}</p>
           <div className={styles.buttonContainer}>
             <div className={styles.actionButtons}>
