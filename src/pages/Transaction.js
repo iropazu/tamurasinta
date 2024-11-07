@@ -52,7 +52,7 @@ const Transaction = () => {
   }
 
   const handleKeyDown = (e) => {
-    if (e.key === 'Enter' && !e.shiftKey) {
+    if (e.key === 'Enter' && (e.ctrlKey || e.metaKey)) {
       e.preventDefault()
       sendMessage()
     }
@@ -93,7 +93,7 @@ const Transaction = () => {
               className={styles.send}
               ref={inputRef}
               onKeyDown={handleKeyDown}
-              placeholder={`メッセージを入力\nShift + Enter で改行`}
+              placeholder={`メッセージを入力`}
             />
             <button onClick={sendMessage}>
               <SendIcon />

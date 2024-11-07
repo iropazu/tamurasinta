@@ -181,3 +181,9 @@
 .send_container button:hover {
   background-color: #c3dbff;
 }
+
+.greeting {
+  margin: 20px 0;
+  font-size: 16px;
+  color: #666666;
+}

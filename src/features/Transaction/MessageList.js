@@ -3,6 +3,7 @@ import styles from '../../styles/Transaction.module.css'
 import { realtimeDb } from '../../firebase/firebase'
 import { ref, onValue } from 'firebase/database'
 import { useParams } from 'react-router-dom'
+import noImg from '../../assets/image/noImg.jpg'
 
 const MessageList = () => {
   const { itemId } = useParams()
@@ -46,18 +47,30 @@ const MessageList = () => {
 
   return (
     <div className={styles.user_message}>
-      {messages.map((message) => (
-        <div className={styles.messages} key={message.id}>
-          <img src={message.img} alt="icon" />
-          <div className={styles.user_title}>
-            <p>{message.senderName}</p>
-            <div className={styles.message}>
-              <span>{message.messageText}</span>
-              <p>{message.formattedTimestamp}</p>
+      {messages.length === 0 ? (
+        <p className={styles.greeting}>
+          まだメッセージはありません。取引の詳細について話し合いましょう！
+        </p>
+      ) : (
+        messages.map((message) => (
+          <div className={styles.messages} key={message.id}>
+            <img
+              src={
+                message.img ||
+                noImg
+              }
+              alt=""
+            />
+            <div className={styles.user_title}>
+              <p>{message.senderName || 'unknown'}</p>
+              <div className={styles.message}>
+                <span>{message.messageText}</span>
+                <p>{message.formattedTimestamp}</p>
+              </div>
             </div>
           </div>
-        </div>
-      ))}
+        ))
+      )}
       <div ref={messagesEndRef} />
     </div>
   )
