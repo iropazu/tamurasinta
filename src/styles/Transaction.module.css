@@ -174,3 +174,8 @@
   align-items: center;
   justify-content: center;
 }
+
+.send_container button:hover {
+  background-color: #c3dbff;
+}
+
