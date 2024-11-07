@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useRef } from 'react'
 import styles from '../../styles/Transaction.module.css'
 import { realtimeDb } from '../../firebase/firebase'
 import { ref, onValue } from 'firebase/database'
@@ -7,6 +7,7 @@ import { useParams } from 'react-router-dom'
 const MessageList = () => {
   const { itemId } = useParams()
   const [messages, setMessages] = useState([])
+  const messagesEndRef = useRef(null)
 
   useEffect(() => {
     const getmessageRef = ref(realtimeDb, `rooms/${itemId}/messages`)
@@ -37,6 +38,12 @@ const MessageList = () => {
     return `${y}/${m}/${d} ${h}:${min}`
   }
 
+  useEffect(() => {
+    if (messagesEndRef.current) {
+      messagesEndRef.current.scrollIntoView({ behavior: 'smooth' })
+    }
+  }, [messages])
+
   return (
     <div className={styles.user_message}>
       {messages.map((message) => (
@@ -51,6 +58,7 @@ const MessageList = () => {
           </div>
         </div>
       ))}
+      <div ref={messagesEndRef} />
     </div>
   )
 }

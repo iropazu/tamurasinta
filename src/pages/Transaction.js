@@ -44,11 +44,10 @@ const Transaction = () => {
       timestamp: serverTimestamp(),
     })
       .then(() => {
-        alert('Message sent successfully!')
         inputRef.current.value = ''
       })
       .catch((error) => {
-        alert('Error sending message:', error)
+        alert('Error sending message:もう一度お試しください', error)
       })
   }
 
