@@ -1,6 +1,6 @@
 import React from 'react'
 import { useState, useRef, useEffect } from 'react'
-import sample1 from '../assets/image/sample1.jpeg'
+import noImg from '../assets/image/noImg.jpg'
 import styles from '../styles/Transaction.module.css'
 import MessageList from '../features/Transaction/MessageList'
 import SendIcon from '@mui/icons-material/Send'
@@ -10,12 +10,17 @@ import { useParams } from 'react-router-dom'
 import { onAuthStateChanged } from 'firebase/auth'
 import { auth, db } from '../firebase/firebase'
 import { doc, getDoc } from 'firebase/firestore'
+import { useContext } from 'react'
+import { ProductContext } from '../context/ProductContext'
+import { UserContext } from '../context/UserContext'
 
 const Transaction = () => {
   const [senderId, setSenderId] = useState(null)
   const [senderName, setSenderName] = useState(null)
   const [senderImg, setSenderImg] = useState(null)
   const [itemDetail, setItemDetail] = useState([])
+  const { productData } = useContext(ProductContext)
+  const { userData } = useContext(UserContext)
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
@@ -82,6 +87,9 @@ const Transaction = () => {
     fetchItems()
   }, [itemId])
 
+  console.log(userData)
+  console.log(productData)
+
   return (
     <div className={styles.transaction_container}>
       <div className={styles.trading_information}>
@@ -89,12 +97,12 @@ const Transaction = () => {
 
         <div className={styles.item_title}>
           <img src={itemDetail.bookImageUrl} alt="sample1" />
-          <p>{itemDetail.descript}</p>
+          <p>{productData.descript}</p>
         </div>
 
         <div className={styles.item_detail}>
           <div className={styles.inf}>
-            商品代金<p>￥{itemDetail.price}</p>
+            商品代金<p>￥{productData.price}</p>
           </div>
           <div className={styles.inf}>
             購入日時<p>2024年10月23日 17:51</p>
@@ -108,8 +116,11 @@ const Transaction = () => {
         <h2>取引画面</h2>
         <h5>出品者情報</h5>
         <div className={styles.user_information}>
-          <img src={sample1} alt="sample1"></img>
-          <p>name</p>
+          <img
+            src={userData.profileImage?.profileImage || noImg}
+            alt="sample1"
+          ></img>
+          <p>{userData.name}</p>
         </div>
         <div>
           <h5>メッセージ</h5>

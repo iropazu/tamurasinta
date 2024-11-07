@@ -7,13 +7,16 @@ import Loading from '../components/Loading/Loading'
 import Button from '../components/Button/Button'
 import { serverTimestamp } from 'firebase/firestore'
 import { onAuthStateChanged } from 'firebase/auth'
+import { useContext } from 'react'
+import { ProductContext } from '../context/ProductContext'
+import { UserContext } from '../context/UserContext'
 
 const ProductDetail = () => {
   const navigate = useNavigate()
   const { itemId } = useParams()
-  const [productData, setProductData] = useState(null)
+  const { productData, setProductData } = useContext(ProductContext)
   const [selectedImage, setSelectedImage] = useState(null)
-  const [userData, setUserData] = useState(null)
+  const { userData, setUserData } = useContext(UserContext)
   const [isLoading, setIsLoading] = useState(true)
 
   const [buyerId, setBuyerId] = useState('unknown')
@@ -94,6 +97,8 @@ const ProductDetail = () => {
     navigate(`/transaction/${itemId}`)
   }
 
+  console.log('userData', userData)
+
   return (
     <div className={styles.imageAndInfoContainer}>
       <div className={styles.imageContainer}>
@@ -133,10 +138,7 @@ const ProductDetail = () => {
           <p>{productData?.itemCondition || '不明'}</p>
           <h3>出品者</h3>
           <div className={styles.user_information}>
-            <img
-              src={userData?.profileImage || thumbnails[0].src}
-              alt="ユーザー画像"
-            />
+            <img src={userData.profileImage} alt="ユーザー画像" />
             <p>{userData?.name || 'Unknown User'}</p>
           </div>
         </div>
