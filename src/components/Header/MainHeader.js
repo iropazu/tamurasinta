@@ -8,7 +8,8 @@ import noImg from '../../assets/image/noImg.jpg'
 import { Link } from 'react-router-dom'
 import { onAuthStateChanged } from 'firebase/auth'
 import { auth, db } from '../../firebase/firebase'
-import { collection, doc, onSnapshot } from 'firebase/firestore'
+import { doc, onSnapshot } from 'firebase/firestore'
+import { logout } from '../../services/authService'
 
 const MainHeader = () => {
 
@@ -17,23 +18,16 @@ const MainHeader = () => {
   useEffect(()=>{
     let snapUnsubscribe
     const authUnsubscribe=onAuthStateChanged(auth,(user)=>{
-      if (user){
-        const docRef=doc(collection(db,'users'),user.uid)
-        snapUnsubscribe=onSnapshot(docRef,(snap)=>{
-          if(snap.data().profileImage){
-            setImageProfile(snap.data().profileImage)
-          } else if (user.photoURL){
-            setImageProfile(user.photoURL)
-          } else{
-            setImageProfile(noImg)
-          }
+      user 
+      ? onSnapshot(doc(db, 'users', user.uid), (snap) => {
+          setImageProfile(
+            snap.data()?.profileImage || user.photoURL || noImg
+          );
         })
-      } else {
-        setImageProfile(noImg)
-      }
+      : setImageProfile(noImg);
     })
     return ()=>{
-      if(authUnsubscribe) authUnsubscribe()
+      authUnsubscribe()
       if(snapUnsubscribe) snapUnsubscribe()
       }
   },[])
@@ -41,6 +35,7 @@ const MainHeader = () => {
 
   return (
     <header className="main-header-container">
+      <button onClick={logout}></button>
       <div className="right-contents">
         <div className="action-button">
           <FavoriteIcon className="action-icon" style={{ fontSize: 32 }} />
