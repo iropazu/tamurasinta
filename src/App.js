@@ -20,11 +20,11 @@ function App() {
             <Route path="/login" element={<Login />} />
             <Route path="/" element={<Toppage />} />
             <Route path="*" element={<div>Not Found</div>} />
-            <Route path="/transaction" element={<Transaction />} />
+            <Route path="/transaction/:itemId" element={<Transaction />} />
             <Route path="/register-user" element={<RegisterUser />} />
             <Route path="/register" element={<Register />} />
             <Route path="/create-listing" element={<CreateListing />} />
-            <Route path="/product-detail/:id" element={<ProductDetail />} />
+            <Route path="/product-detail/:itemId" element={<ProductDetail />} />
           </Routes>
         </main>
         <Footer />
