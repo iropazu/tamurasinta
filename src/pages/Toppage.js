@@ -1,13 +1,9 @@
 import React, { useEffect } from 'react'
 import { useState } from 'react'
-import '../styles/Toppage.css'
-import sample1 from '../assets/image/sample1.jpeg'
-import sample2 from '../assets/image/sample2.jpeg'
-import sample3 from '../assets/image/sample3.jpeg'
-import sample4 from '../assets/image/sample4.jpeg'
-import sample5 from '../assets/image/sample5.jpeg'
 import { db } from '../firebase/firebase'
 import { collection, getDocs } from 'firebase/firestore'
+import { Link } from 'react-router-dom'
+import styles from '../styles/Toppage.module.css'
 
 const Toppage = () => {
   const [items, setItems] = useState([])
@@ -18,13 +14,16 @@ const Toppage = () => {
     const fetchItems = async () => {
       try {
         const itemSnapshot = await getDocs(itemsRef)
-        const itemsArray = itemSnapshot.docs
-          .map((doc) => doc.data())
-          .filter(
-            (item) =>
-              Array.isArray(item.bookImageUrl) && item.bookImageUrl.length > 0
-          )
-          .map((item) => item.bookImageUrl[0])
+        const itemsArray = itemSnapshot.docs.map((doc) => {
+          const data = doc.data()
+          return {
+            id: doc.id,
+            imageUrl:
+              Array.isArray(data.bookImageUrl) && data.bookImageUrl.length > 0
+                ? data.bookImageUrl[0]
+                : null,
+          }
+        })
         setItems(itemsArray)
       } catch (error) {
         alert('Error fetching items:', error)
@@ -36,16 +35,22 @@ const Toppage = () => {
   console.log('items', items)
 
   return (
-    <div className="toppage-container">
-      <div className="in_transaction">
-        <h5>取引中の商品</h5>
-        <div className="img-container">
+    <div className={styles.toppage_container}>
+      <div className={styles.in_transaction}>
+        <h5>商品</h5>
+        <div className={styles.img_container}>
           {items.map((item, index) => (
-            <img src={item} alt={`sample${index}`} className="sample-image" />
+            <Link to={`/product-detail/${item.id}`} key={item.id}>
+              <img
+                src={item.imageUrl}
+                alt={`sample${index}`}
+                className={styles.sample_image}
+              />
+            </Link>
           ))}
         </div>
       </div>
-      <div className="subjects">
+      {/* <div className="subjects">
         <h5>科目</h5>
         <div className="img-container">
           <img src={sample1} alt="sample1" className="sample-image" />
@@ -54,7 +59,7 @@ const Toppage = () => {
           <img src={sample4} alt="sample4" className="sample-image" />
           <img src={sample5} alt="sample5" className="sample-image" />
         </div>
-      </div>
+      </div> */}
     </div>
   )
 }
