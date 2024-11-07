@@ -39,10 +39,9 @@
 
 .button {
   display: block;
-  margin: 80px auto 0 auto;
+  margin: 80px auto 80px auto;
   width: 100px;
-  /* height: 40px;
-  font-size: 20px; */
+  
 }
 
 .back {

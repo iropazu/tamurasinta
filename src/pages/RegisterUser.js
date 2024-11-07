@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useRef, useState } from 'react'
 import style from '../styles/RegisterUser.module.css'
 import Button from '../components/Button/Button'
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew'
@@ -27,6 +27,7 @@ const RegisterUser = () => {
     }
     await addData(data)
     navigate('/')
+    window.location.reload()
   }
 
   return (

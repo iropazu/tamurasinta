@@ -8,64 +8,71 @@ import noImg from '../../assets/image/noImg.jpg'
 import { Link } from 'react-router-dom'
 import { onAuthStateChanged } from 'firebase/auth'
 import { auth, db } from '../../firebase/firebase'
-import { doc, getDoc, onSnapshot } from 'firebase/firestore'
+import { doc, getDoc } from 'firebase/firestore'
 import { logout } from '../../services/authService'
 
 const MainHeader = () => {
 
-  const [imageProfile,setImageProfile]=useState(null)
+  const [imageProfile, setImageProfile] = useState(null)
+  const [headerBool, setHeaderBool] = useState(false)
+  const [loginBool, setLoginBool] = useState(false)
 
-
-  // onSnapshotバージョン
-  // useEffect(()=>{
-  //   let snapUnsubscribe
-  //   const authUnsubscribe=onAuthStateChanged(auth,(user)=>{
-  //     user 
-  //     ? onSnapshot(doc(db, 'users', user.uid), (snap) => {
-  //         setImageProfile(
-  //           snap.data()?.profileImage || user.photoURL || noImg
-  //         );
-  //       })
-  //     : setImageProfile(noImg);
-  //   })
-  //   return ()=>{
-  //     authUnsubscribe()
-  //     if(snapUnsubscribe) snapUnsubscribe()
-  //     }
-  // },[])
-
-  
-  // getDocバージョン
   useEffect(() => {
+
     const authUnsubscribe = onAuthStateChanged(auth, async (user) => {
       if (user) {
+        setHeaderBool(true)
         const docRef = doc(db, 'users', user.uid);
         const snap = await getDoc(docRef);
         setImageProfile(snap.exists() && snap.data()?.profileImage || user.photoURL || noImg);
       } else {
         setImageProfile(noImg);
+        setHeaderBool(false)
       }
     });
     return () => {
       authUnsubscribe();
     };
   }, []);
-  
+
+  const toggleLogin = () => {
+    setLoginBool(!loginBool)
+  }
+
+  const handleLogout=()=>{
+    logout()
+    setLoginBool(!loginBool)
+  }
 
   return (
     <header className="main-header-container">
-      <button onClick={logout}></button>
-      <div className="right-contents">
-        <div className="action-button">
-          <FavoriteIcon className="action-icon" style={{ fontSize: 32 }} />
-          <MessageIcon className="action-icon" style={{ fontSize: 32 }} />
-          <NotificationsIcon className="action-icon" style={{ fontSize: 32 }} />
+      {loginBool && (
+          <Button className='logout-button' onClick={handleLogout}>ログアウト</Button>
+      )}
+      {headerBool ? (
+        <div className="right-contents">
+          <div className="action-button">
+            <FavoriteIcon className="action-icon" style={{ fontSize: 32 }} />
+            <MessageIcon className="action-icon" style={{ fontSize: 32 }} />
+            <NotificationsIcon className="action-icon" style={{ fontSize: 32 }} />
+          </div>
+          <img onClick={toggleLogin} src={imageProfile} alt="profile" className="profile-image" />
+          <Link to={'/create-listing'}>
+            <Button className="listing-button">出品</Button>
+          </Link>
         </div>
-        <img src={imageProfile} alt="profile" className="profile-image" />
-        <Link to={'/create-listing'}>
-          <Button className="listing-button">出品</Button>
-        </Link>
-      </div>
+      ) : (
+        <div className="right-contents">
+          <div className="auth-button">
+            <Link to={'/register'}>
+              <button>新規登録</button>
+            </Link>
+            <Link to={'/login'}>
+              <button>ログイン</button>
+            </Link>
+          </div>
+        </div>
+      )}
     </header>
   )
 }

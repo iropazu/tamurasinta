@@ -33,3 +33,21 @@
   border-radius: 50%;
   border: 1px solid #e7e7e7;
 }
+
+.logout-button {
+  position: fixed;
+  top: 66px;
+  right: 100px;
+  width: 207px;
+  height: 53px;
+  background-color: white;
+  color: #666666;
+  border-radius: 0;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.auth-button button{
+  background-color: white;
+  color: #666666;
+  width: 90px;
+}
