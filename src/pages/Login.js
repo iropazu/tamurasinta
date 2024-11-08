@@ -45,12 +45,12 @@ const Login = () => {
   return <div className={style.main}><h1 className={style.body}>ログイン</h1>
   
     <div><p className={style.p}>メールアドレス</p>
-    <input onChange={(e)=>{setMailaddress(e.target.value)}} type = "text" ></input></div>
+    <input className={style.imput} onChange={(e)=>{setMailaddress(e.target.value)}} type = "text" ></input></div>
   
     {addoresserror && <p>{addoresserror}</p>}
     
     <div><p className={style.p}>パスワード</p>
-    <input onChange={(e)=>{setPassword(e.target.value)}} type = "passward" ></input> </div>
+    <input className={style.imput} onChange={(e)=>{setPassword(e.target.value)}} type = "passward" ></input> </div>
     
     {passworderror && <p>{passworderror}</p>}
 
@@ -62,7 +62,7 @@ const Login = () => {
     
     <button onClick={handleGoogleLogin} className={style.button}>
       <img src="https://developers.google.com/identity/images/g-logo.png" className={style.picture}/>
-      <p className={style.pic}>Googleで登録</p>
+      <p className={style.pic}>Googleでサインイン</p>
     </button>
 
     <button onClick={handleLogin} className={style.button01}>ログイン</button>
