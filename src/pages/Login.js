@@ -1,8 +1,9 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import style from '../styles/Login.module.css'
 import { GoogleAuth } from '../services/authService'
 import { useNavigate } from 'react-router-dom'
 import { login } from '../services/authService'
+import { auth } from '../firebase/firebase'
 
 const Login = () => {
 
@@ -18,6 +19,12 @@ const Login = () => {
     await GoogleAuth()
     navigate('/')
   }
+
+  useEffect(()=>{
+    if(auth.currentUser){
+      navigate('/')
+    }
+  },[])
 
   const handleLogin=async()=>{
     const regix = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
@@ -35,15 +42,15 @@ const Login = () => {
     navigate('/')
   }
 
-  return <div className={style.main}><p className={style.body}>ログイン</p>
+  return <div className={style.main}><h1 className={style.body}>ログイン</h1>
   
     <div><p className={style.p}>メールアドレス</p>
-    <input onChange={(e)=>{setMailaddress(e.target.value)}} type = "text" style={{width: 500, height: 30}}></input></div>
+    <input onChange={(e)=>{setMailaddress(e.target.value)}} type = "text" ></input></div>
   
     {addoresserror && <p>{addoresserror}</p>}
     
     <div><p className={style.p}>パスワード</p>
-    <input onChange={(e)=>{setPassword(e.target.value)}} type = "text" style={{width: 500, height: 30}}></input> </div>
+    <input onChange={(e)=>{setPassword(e.target.value)}} type = "passward" ></input> </div>
     
     {passworderror && <p>{passworderror}</p>}
 
@@ -58,8 +65,6 @@ const Login = () => {
       <p className={style.pic}>Googleで登録</p>
     </button>
 
-    
-    
     <button onClick={handleLogin} className={style.button01}>ログイン</button>
   </div>
 }

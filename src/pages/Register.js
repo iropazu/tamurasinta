@@ -76,7 +76,7 @@ const Register = () => {
           className={style.back}
         ></ArrowBackIosNewIcon>
       </Link>
-      <h1 className={style.title}>会員登録</h1>
+      <h1 className={style.title}>新規登録</h1>
       <div className={style.form}>
         <div className="send_input">
           <label className={style.label}>メールアドレス</label>
