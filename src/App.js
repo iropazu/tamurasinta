@@ -1,4 +1,5 @@
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
+import { useState, useEffect } from 'react'
 import './App.css'
 import Login from './pages/Login'
 import Toppage from './pages/Toppage'
@@ -9,8 +10,27 @@ import RegisterUser from './pages/RegisterUser'
 import Register from './pages/Register'
 import CreateListing from './pages/CreateListing'
 import ProductDetail from './pages/ProductDetail'
+import { getAuth, onAuthStateChanged } from 'firebase/auth'
 
 function App() {
+  const [isAuth, setIsAuth] = useState(false)
+
+  useEffect(() => {
+    const auth = getAuth()
+
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (user) {
+        setIsAuth(true)
+        console.log(isAuth)
+      } else {
+        setIsAuth(false)
+        console.log(isAuth)
+      }
+    })
+
+    return () => unsubscribe()
+  }, [])
+
   return (
     <div className="App">
       <Router>
