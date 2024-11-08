@@ -5,7 +5,7 @@ import FavoriteIcon from '@mui/icons-material/Favorite'
 import MessageIcon from '@mui/icons-material/Message'
 import NotificationsIcon from '@mui/icons-material/Notifications'
 import noImg from '../../assets/image/noImg.jpg'
-import { Link } from 'react-router-dom'
+import { Link, Navigate, useNavigate } from 'react-router-dom'
 import { onAuthStateChanged } from 'firebase/auth'
 import { auth, db } from '../../firebase/firebase'
 import { doc, getDoc } from 'firebase/firestore'
@@ -16,6 +16,7 @@ const MainHeader = () => {
   const [imageProfile, setImageProfile] = useState(null)
   const [headerBool, setHeaderBool] = useState(false)
   const [loginBool, setLoginBool] = useState(false)
+  const navigate=useNavigate()
 
   useEffect(() => {
 
@@ -42,6 +43,7 @@ const MainHeader = () => {
   const handleLogout=()=>{
     logout()
     setLoginBool(!loginBool)
+    navigate('/')
   }
 
   return (
