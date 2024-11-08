@@ -16,6 +16,7 @@ const MessageList = () => {
 
     const unsubscribe = onValue(getmessageRef, (snapshot) => {
       const data = snapshot.val()
+      console.log(data)
       if (data) {
         const messageArray = Object.keys(data).map((key) => ({
           id: key,
@@ -35,6 +36,8 @@ const MessageList = () => {
     }
   }, [messages])
 
+  console.log(messages)
+
   return (
     <div className={styles.user_message}>
       {messages.length === 0 ? (
@@ -44,9 +47,9 @@ const MessageList = () => {
       ) : (
         messages.map((message) => (
           <div className={styles.messages} key={message.id}>
-            <img src={message.img || noImg} alt="" />
+            <img src={message.profileImage || noImg} alt="user_icon" />
             <div className={styles.user_title}>
-              <p>{message.senderName || 'unknown'}</p>
+              <p>{message.name || 'unknown'}</p>
               <div className={styles.message}>
                 <span>{message.messageText}</span>
                 <p>{message.formattedTimestamp}</p>
