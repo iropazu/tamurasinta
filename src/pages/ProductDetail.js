@@ -7,6 +7,8 @@ import Loading from '../components/Loading/Loading'
 import Button from '../components/Button/Button'
 import { onAuthStateChanged } from 'firebase/auth'
 import noImg from '../assets/image/noImg.jpg'
+import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+import ChatIcon from '@mui/icons-material/Chat';
 
 const ProductDetail = () => {
   const navigate = useNavigate()
@@ -181,11 +183,11 @@ const ProductDetail = () => {
 
         <div className={styles.information}>
           <h1>{productData.itemName}</h1>
-          <p>¥{productData.price}</p>
+          <p className={styles.yenP}>￥ {productData.price}</p>
           <div className={styles.buttonContainer}>
             <div className={styles.actionButtons}>
-              <button className={styles.actionButton}>💙いいね</button>
-              <button className={styles.actionButton}>💬メッセージ</button>
+              <button className={styles.actionButton}><FavoriteBorderIcon/>いいね</button>
+              <button className={styles.actionButton}><ChatIcon/>メッセージ</button>
             </div>
             <Button
               className={buttonProps.style}
@@ -195,6 +197,7 @@ const ProductDetail = () => {
               {buttonProps.text}
             </Button>
           </div>
+          <h2>商品の詳細</h2>
           <h3>商品の説明</h3>
           <p>{productData.descript}</p>
           <h3>商品の状態</h3>
