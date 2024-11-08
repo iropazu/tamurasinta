@@ -13,8 +13,8 @@
 
 .mainImage {
   transition: all 0.3s ease;
-  height: 593px;
-  width: 593px;
+  max-height: 593px;
+  max-width: 500px;
   object-fit: contain;
 }
 
