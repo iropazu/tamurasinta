@@ -171,11 +171,13 @@ const ProductDetail = () => {
           ))}
         </div>
 
-        <img
-          src={selectedImage || noImg}
-          alt="選択された商品画像"
-          className={styles.mainImage}
-        />
+        <div className={styles.mainImgContainer}>
+          <img
+            src={selectedImage || noImg}
+            alt="選択された商品画像"
+            className={styles.mainImage}
+          />
+        </div>
 
         <div className={styles.information}>
           <h1>{productData.itemName}</h1>
