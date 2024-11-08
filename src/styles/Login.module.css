@@ -20,8 +20,7 @@
 
 .button {
     margin: auto;
-    color: black;
-    border: 1px solid#333;
+    color: white;
     width: 559px ;
     height: 50px;
     display: flex;
@@ -29,12 +28,14 @@
 }
 
 .picture {
-    width: 20px;
-    height: 20px;
+    width: 40px;
+    height: 40px;
+    margin-left: 7px;
+    border-radius: 5px;
 }
 
 .pic {
-    margin: auto;
+    margin-left: 160px;
 }
 
 .button01 {
@@ -53,4 +54,8 @@
     display: flex;
     flex-direction: column;
     gap: 20px;
+}
+
+.imput {
+    padding: 3px;
 }
