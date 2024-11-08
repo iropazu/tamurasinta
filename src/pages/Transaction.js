@@ -9,24 +9,19 @@ import { push, ref } from 'firebase/database'
 import { useParams } from 'react-router-dom'
 import { onAuthStateChanged } from 'firebase/auth'
 import { auth, db } from '../firebase/firebase'
-import { collection, doc, getDoc, getDocs } from 'firebase/firestore'
+import { doc, getDoc, serverTimestamp } from 'firebase/firestore'
 import formatDate from '../utils/formatDate'
 
 const Transaction = () => {
   const [senderId, setSenderId] = useState(null)
-  const [senderName, setSenderName] = useState(null)
-  const [senderImg, setSenderImg] = useState(null)
   const [itemDetail, setItemDetail] = useState([])
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
         setSenderId(user.uid)
-        setSenderName(user.displayName)
-        setSenderImg(user.photoURL)
       } else {
         setSenderId('unknown')
-        setSenderName('unknown')
       }
     })
     return unsubscribe
@@ -45,10 +40,10 @@ const Transaction = () => {
     const sendmessagesRef = ref(realtimeDb, `rooms/${itemId}/messages`)
     push(sendmessagesRef, {
       senderId: senderId,
-      senderName: senderName,
-      img: senderImg,
+      senderName: userDetail.name,
+      img: userDetail.profileImage,
       messageText: message,
-      timestamp: new Date(),
+      timestamp: new Date().getTime(),
     })
       .then(() => {
         inputRef.current.value = ''
@@ -66,6 +61,7 @@ const Transaction = () => {
   }
 
   const [userDetail, setUserDetail] = useState([])
+
   useEffect(() => {
     const fetchData = async () => {
       const itemDetailRef = doc(db, 'books', itemId)
