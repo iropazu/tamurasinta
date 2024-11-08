@@ -15,6 +15,7 @@ const CreateListing = () => {
   const [descript, setDescript] = useState('')
   const [price, setPrice] = useState('')
   const [bigImage, setBigImage] = useState(null)
+  const [priceError,setPriceError]=useState('')
   const [check, setCheck] = useState({
     imagesCheck: '',
     itemNameCheck: '',
@@ -63,6 +64,12 @@ const CreateListing = () => {
   }
 
   const handleBookUpload = async () => {
+
+    if (/[^0-9]/.test(price)){
+      setPriceError('半角で入力してください')
+      return
+    }
+
     const newCheck = {}
 
     if (images.length === 0) newCheck.imagesCheck = '※画像を選択してください'
@@ -85,12 +92,14 @@ const CreateListing = () => {
     }
   }
 
-  // const priceCheck=(e)=>{
-  //   if (/[\uFF01-\uFF60\uFFE0-\uFFE6]/.test(e.target.value)){
-  //     console.log('全角だよ')      
-  //     console.log(e.target.value)  
-  //   }
-  // }
+  const priceCheck=(e)=>{
+    if (/[^0-9]/.test(e.target.value)){
+      setPriceError('※半角数字で入力してください')
+    } else {
+      setPriceError('')
+      setPrice(e.target.value)
+    }
+  }
 
   return (
     <div className={style.main}>
@@ -195,15 +204,11 @@ const CreateListing = () => {
           <h2>販売価格</h2>
           <p>販売価格</p>
           <input
-            // onInput={priceCheck}
-            type="number"
-            min="0"
-            onChange={(e) => {
-              setPrice(e.target.value)
-            }
-          }
+            onInput={priceCheck}
+            type="text"
           />
           {!price && <p className={style.errorP}>{check.priceCheck}</p>}
+          {priceError && <p className={style.errorP}>{priceError}</p>}
         </div>
       </div>
       <Button onClick={handleBookUpload} className={style.Button}>
