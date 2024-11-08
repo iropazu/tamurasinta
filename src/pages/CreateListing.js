@@ -15,10 +15,12 @@ const CreateListing = () => {
   const [descript, setDescript] = useState('')
   const [price, setPrice] = useState('')
   const [bigImage, setBigImage] = useState(null)
+  const [priceError,setPriceError]=useState('')
   const [check, setCheck] = useState({
     imagesCheck: '',
     itemNameCheck: '',
     subjectCheck: '',
+    itemCondition:'',
     priceCheck: '',
   })
   const navigate = useNavigate()
@@ -62,11 +64,19 @@ const CreateListing = () => {
   }
 
   const handleBookUpload = async () => {
+
+    if (/[^0-9]/.test(price)){
+      setPriceError('半角で入力してください')
+      return
+    }
+
     const newCheck = {}
 
     if (images.length === 0) newCheck.imagesCheck = '※画像を選択してください'
     if (!itemName) newCheck.itemNameCheck = '※商品名を入力してください'
+    if (!itemName) newCheck.itemNameCheck = '※商品名を入力してください'
     if (!subject) newCheck.subjectCheck = '※授業名を入力してください'
+    if (!itemCondition) newCheck.itemCondition = '※商品の状態を入力してください'
     if (!price) newCheck.priceCheck = '※価格を入力してください'
 
     setCheck(newCheck)
@@ -79,6 +89,15 @@ const CreateListing = () => {
       await bookUpload(images, data)
       console.log(images.length)
       navigate('/')
+    }
+  }
+
+  const priceCheck=(e)=>{
+    if (/[^0-9]/.test(e.target.value)){
+      setPriceError('※半角数字で入力してください')
+    } else {
+      setPriceError('')
+      setPrice(e.target.value)
     }
   }
 
@@ -170,12 +189,14 @@ const CreateListing = () => {
               setItemCondition(e.target.value)
             }}
           >
+            <option value=""></option>
             <option value="かなり良い">かなり良い</option>
             <option value="良い">良い</option>
             <option value="普通">普通</option>
             <option value="悪い">悪い</option>
             <option value="かなり悪い">かなり悪い</option>
           </select>
+          {!itemCondition && <p className={style.errorP}>{check.itemCondition}</p>}
           <p>商品の詳細</p>
           <textarea ref={textareaRef} onInput={handleTextarea}></textarea>
         </div>
@@ -183,13 +204,11 @@ const CreateListing = () => {
           <h2>販売価格</h2>
           <p>販売価格</p>
           <input
-            type="number"
-            min="1"
-            onChange={(e) => {
-              setPrice(e.target.value)
-            }}
+            onInput={priceCheck}
+            type="text"
           />
           {!price && <p className={style.errorP}>{check.priceCheck}</p>}
+          {priceError && <p className={style.errorP}>{priceError}</p>}
         </div>
       </div>
       <Button onClick={handleBookUpload} className={style.Button}>
