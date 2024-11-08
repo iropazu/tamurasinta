@@ -4,6 +4,7 @@ import { realtimeDb } from '../../firebase/firebase'
 import { ref, onValue } from 'firebase/database'
 import { useParams } from 'react-router-dom'
 import noImg from '../../assets/image/noImg.jpg'
+import formatDate from '../../utils/formatDate'
 
 const MessageList = () => {
   const { itemId } = useParams()
@@ -27,17 +28,6 @@ const MessageList = () => {
 
     return () => unsubscribe()
   }, [itemId])
-
-  const formatDate = (timestamp) => {
-    if (!timestamp) return '未設定'
-    const date = new Date(timestamp)
-    const y = date.getFullYear()
-    const m = String(date.getMonth() + 1).padStart(2, '0')
-    const d = String(date.getDate()).padStart(2, '0')
-    const h = String(date.getHours()).padStart(2, '0')
-    const min = String(date.getMinutes()).padStart(2, '0')
-    return `${y}/${m}/${d} ${h}:${min}`
-  }
 
   useEffect(() => {
     if (messagesEndRef.current) {
