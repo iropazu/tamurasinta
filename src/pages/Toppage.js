@@ -14,16 +14,24 @@ const Toppage = () => {
     const fetchItems = async () => {
       try {
         const itemSnapshot = await getDocs(itemsRef)
-        const itemsArray = itemSnapshot.docs.map((doc) => {
-          const data = doc.data()
-          return {
-            id: doc.id,
-            imageUrl:
-              Array.isArray(data.bookImageUrl) && data.bookImageUrl.length > 0
-                ? data.bookImageUrl[0]
-                : null,
-          }
-        })
+        const itemsArray = await Promise.all(
+          itemSnapshot.docs.map(async (doc) => {
+            const data = doc.data()
+
+            const subCollectionRef = collection(doc.ref, 'buyerInfo')
+            const subCollectionSnapshot = await getDocs(subCollectionRef)
+            const isSold = !subCollectionSnapshot.empty
+
+            return {
+              id: doc.id,
+              imageUrl:
+                Array.isArray(data.bookImageUrl) && data.bookImageUrl.length > 0
+                  ? data.bookImageUrl[0]
+                  : null,
+              isSold: isSold,
+            }
+          })
+        )
         setItems(itemsArray)
       } catch (error) {
         alert('Error fetching items:', error)
@@ -39,11 +47,14 @@ const Toppage = () => {
         <div className={styles.img_container}>
           {items.map((item, index) => (
             <Link to={`/product-detail/${item.id}`} key={item.id}>
-              <img
-                src={item.imageUrl}
-                alt={`sample${index}`}
-                className={styles.sample_image}
-              />
+              <div className={styles.image_wrapper}>
+                <img
+                  src={item.imageUrl}
+                  alt={`sample${index}`}
+                  className={styles.sample_image}
+                />
+                {item.isSold && <span className={styles.sold_label}>SOLD</span>}
+              </div>
             </Link>
           ))}
         </div>
