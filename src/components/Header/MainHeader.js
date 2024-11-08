@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react'
-import './MainHeader.css'
+import styles from './MainHeader.module.css'
 import Button from '../Button/Button'
-import FavoriteIcon from '@mui/icons-material/Favorite'
-import MessageIcon from '@mui/icons-material/Message'
-import NotificationsIcon from '@mui/icons-material/Notifications'
+// import MessageIcon from '@mui/icons-material/Message'
+// import ChatBubbleOutlineIcon from '@mui/icons-material/ChatBubbleOutline'
+// import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder'
+// import NotificationsNoneIcon from '@mui/icons-material/NotificationsNone'
 import noImg from '../../assets/image/noImg.jpg'
 import { Link } from 'react-router-dom'
 import { onAuthStateChanged } from 'firebase/auth'
@@ -12,58 +13,71 @@ import { doc, getDoc } from 'firebase/firestore'
 import { logout } from '../../services/authService'
 
 const MainHeader = () => {
-
   const [imageProfile, setImageProfile] = useState(null)
   const [headerBool, setHeaderBool] = useState(false)
   const [loginBool, setLoginBool] = useState(false)
 
   useEffect(() => {
-
     const authUnsubscribe = onAuthStateChanged(auth, async (user) => {
       if (user) {
         setHeaderBool(true)
-        const docRef = doc(db, 'users', user.uid);
-        const snap = await getDoc(docRef);
-        setImageProfile(snap.exists() && snap.data()?.profileImage || user.photoURL || noImg);
+        const docRef = doc(db, 'users', user.uid)
+        const snap = await getDoc(docRef)
+        setImageProfile(
+          (snap.exists() && snap.data()?.profileImage) || user.photoURL || noImg
+        )
       } else {
-        setImageProfile(noImg);
+        setImageProfile(noImg)
         setHeaderBool(false)
       }
-    });
+    })
     return () => {
-      authUnsubscribe();
-    };
-  }, []);
+      authUnsubscribe()
+    }
+  }, [])
 
   const toggleLogin = () => {
     setLoginBool(!loginBool)
   }
 
-  const handleLogout=()=>{
+  const handleLogout = () => {
     logout()
     setLoginBool(!loginBool)
   }
 
   return (
-    <header className="main-header-container">
+    <header className={styles.main_header_container}>
       {loginBool && (
-          <Button className='logout-button' onClick={handleLogout}>ログアウト</Button>
+        <Button className={styles.logout_button} onClick={handleLogout}>
+          ログアウト
+        </Button>
       )}
       {headerBool ? (
-        <div className="right-contents">
-          <div className="action-button">
-            <FavoriteIcon className="action-icon" style={{ fontSize: 32 }} />
-            <MessageIcon className="action-icon" style={{ fontSize: 32 }} />
-            <NotificationsIcon className="action-icon" style={{ fontSize: 32 }} />
+        <div className={styles.right_contents}>
+          <div className={styles.stylesaction_button}>
+            {/* <FavoriteBorderIcon
+              className="action-icon"
+              style={{ fontSize: 28 }}
+            />
+            <MessageIcon className="action-icon" style={{ fontSize: 28 }} />
+            <NotificationsNoneIcon
+              className="action-icon"
+              style={{ fontSize: 28 }}
+            /> */}
           </div>
-          <img onClick={toggleLogin} src={imageProfile} alt="profile" className="profile-image" />
+          <img
+            onClick={toggleLogin}
+            src={imageProfile}
+            alt="profile"
+            className={styles.profile_image}
+          />
           <Link to={'/create-listing'}>
-            <Button className="listing-button">出品</Button>
+            <Button className={styles.listing_button}>出品</Button>
           </Link>
         </div>
       ) : (
-        <div className="right-contents">
-          <div className="auth-button">
+        <div className={styles.right_contents}>
+          <div className={styles.auth_button}>
             <Link to={'/register'}>
               <button>新規登録</button>
             </Link>

@@ -1,0 +1,22 @@
+.button {
+  height: 38px;
+  width: 65px;
+  background: linear-gradient(45deg, #ff8142, #ff5a1f);
+  color: #fff;
+  font-size: 15px;
+  border: none;
+  border-radius: 6px;
+  text-decoration: none;
+  cursor: pointer;
+  font-weight: 400;
+  transition: 0.3s;
+}
+
+.button:hover {
+  transform: scale(1.05);
+  opacity: 0.8;
+}
+
+.button:active {
+  transform: scale(0.95);
+}
