@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import styles from './MainHeader.module.css'
 import Button from '../Button/Button'
-// import MessageIcon from '@mui/icons-material/Message'
-// import ChatBubbleOutlineIcon from '@mui/icons-material/ChatBubbleOutline'
-// import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder'
-// import NotificationsNoneIcon from '@mui/icons-material/NotificationsNone'
+import MessageIcon from '@mui/icons-material/Message'
+import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder'
+import NotificationsNoneIcon from '@mui/icons-material/NotificationsNone'
 import noImg from '../../assets/image/noImg.jpg'
 import { Link } from 'react-router-dom'
 import { onAuthStateChanged } from 'firebase/auth'
@@ -54,16 +53,19 @@ const MainHeader = () => {
       )}
       {headerBool ? (
         <div className={styles.right_contents}>
-          <div className={styles.stylesaction_button}>
-            {/* <FavoriteBorderIcon
-              className="action-icon"
+          <div className={styles.action_button}>
+            <FavoriteBorderIcon
+              className={styles.action_icon}
               style={{ fontSize: 28 }}
             />
-            <MessageIcon className="action-icon" style={{ fontSize: 28 }} />
-            <NotificationsNoneIcon
-              className="action-icon"
+            <MessageIcon
+              className={styles.action_icon}
               style={{ fontSize: 28 }}
-            /> */}
+            />
+            <NotificationsNoneIcon
+              className={styles.action_icon}
+              style={{ fontSize: 28 }}
+            />
           </div>
           <img
             onClick={toggleLogin}

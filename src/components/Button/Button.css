@@ -1,4 +1,4 @@
-.button {
+button {
   height: 38px;
   width: 65px;
   background: linear-gradient(45deg, #ff8142, #ff5a1f);
@@ -12,11 +12,11 @@
   transition: 0.3s;
 }
 
-.button:hover {
+button:hover {
   transform: scale(1.05);
   opacity: 0.8;
 }
 
-.button:active {
+button:active {
   transform: scale(0.95);
 }
