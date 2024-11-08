@@ -112,3 +112,45 @@
 .information {
   width: 516px;
 }
+
+.soldButton:disabled {
+  background: #ccc;
+}
+
+.soldButton {
+  background-color: rgb(159, 159, 159);
+  color: white;
+  font-weight: bold;
+  width: 100%;
+  font-weight: 700;
+  font-size: 15px;
+  line-height: 21px;
+  height: 43px;
+  cursor: not-allowed;
+}
+
+.ownerButton {
+  color: #ff5a1f;
+  font-weight: bold;
+  width: 100%;
+  font-weight: 700;
+  font-size: 15px;
+  line-height: 21px;
+  height: 43px;
+  background-color: #fff;
+  border: #ff881f solid 1px;
+  transition: 0.3s;
+}
+
+.purchaseButton {
+  color: #ff5a1f;
+  font-weight: bold;
+  width: 100%;
+  font-weight: 700;
+  font-size: 15px;
+  line-height: 21px;
+  height: 43px;
+  background-color: #fff;
+  border: #ff881f solid 1px;
+  transition: 0.3s;
+}
