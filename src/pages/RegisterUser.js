@@ -6,14 +6,15 @@ import { Link, useNavigate } from 'react-router-dom'
 import { addData } from '../services/authService'
 import defaultAvatar from '../assets/image/default-avatar.png'
 import { addImage } from '../services/bookUpload'
+import { getAuth, updateProfile } from 'firebase/auth'
 
 const RegisterUser = () => {
   const [name, setName] = useState('')
   const [number, setnumber] = useState('')
   const [major, setmajor] = useState('')
   const [grade, setGrade] = useState('')
-  const [profileImage,setProfileImage]=useState('')
-  const inputRef=useRef()
+  const [profileImage, setProfileImage] = useState('')
+  const inputRef = useRef()
   const navigate = useNavigate()
 
   const handleUserInfo = async () => {
@@ -23,9 +24,17 @@ const RegisterUser = () => {
       studentId: number,
       major: major,
       grade: grade,
-      profileImage:profileImageUrl
+      profileImage: profileImageUrl,
     }
     await addData(data)
+    const auth = getAuth()
+    const user = auth.currentUser
+    if (user) {
+      await updateProfile(user, {
+        displayName: name,
+        photoURL: profileImageUrl,
+      })
+    }
     navigate('/')
     window.location.reload()
   }
@@ -40,15 +49,26 @@ const RegisterUser = () => {
       </Link>
       <form action="/" className={style.form}>
         <div className={style.profileImage}>
-          <button type='button' onClick={()=>{inputRef.current.click()}}>
+          <button
+            type="button"
+            onClick={() => {
+              inputRef.current.click()
+            }}
+          >
             {profileImage ? (
-              <img src={URL.createObjectURL(profileImage[0])}/>
-            ):
-            (
-              <img src={defaultAvatar} />
+              <img src={URL.createObjectURL(profileImage[0])} alt='user-img'/>
+            ) : (
+              <img src={defaultAvatar} alt='default-img'/>
             )}
           </button>
-          <input type="file" ref={inputRef} onChange={(e)=>{setProfileImage(e.target.files)}} style={{display:'none'}}/>
+          <input
+            type="file"
+            ref={inputRef}
+            onChange={(e) => {
+              setProfileImage(e.target.files)
+            }}
+            style={{ display: 'none' }}
+          />
         </div>
         <div className="send_input">
           <label className={style.label}>名前</label>

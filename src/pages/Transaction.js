@@ -9,7 +9,7 @@ import { push, ref } from 'firebase/database'
 import { useParams } from 'react-router-dom'
 import { onAuthStateChanged } from 'firebase/auth'
 import { auth, db } from '../firebase/firebase'
-import { collection, doc, getDoc, getDocs } from 'firebase/firestore'
+import { doc, getDoc } from 'firebase/firestore'
 import formatDate from '../utils/formatDate'
 
 const Transaction = () => {
@@ -48,7 +48,7 @@ const Transaction = () => {
       senderName: senderName,
       img: senderImg,
       messageText: message,
-      timestamp: new Date(),
+      timestamp: new Date().getTime(),
     })
       .then(() => {
         inputRef.current.value = ''
