@@ -37,7 +37,7 @@ export const GoogleAuth = async () => {
       await setDoc(doc(collection(db, 'users'), user.uid), {
         mail: user.email,
         timeData: new Date(),
-      })
+      },{merge:true})
     } else {
     }
   } catch (error) {
