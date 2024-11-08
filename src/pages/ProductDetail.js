@@ -6,6 +6,7 @@ import styles from '../styles/ProductDetail.module.css'
 import Loading from '../components/Loading/Loading'
 import Button from '../components/Button/Button'
 import { onAuthStateChanged } from 'firebase/auth'
+import noImg from '../assets/image/noImg.jpg'
 
 const ProductDetail = () => {
   const navigate = useNavigate()
@@ -16,11 +17,16 @@ const ProductDetail = () => {
   const [isLoading, setIsLoading] = useState(true)
 
   const [buyerId, setBuyerId] = useState('unknown')
+  const [currentUser, setCurrentUser] = useState(null)
+  const [isBuyer, setIsBuyer] = useState(false)
+  const [isOwner, setIsOwner] = useState(false)
+  const [isSold, setIsSold] = useState(false)
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
         setBuyerId(user.uid)
+        setCurrentUser(user.uid)
       }
     })
     return unsubscribe
@@ -32,6 +38,18 @@ const ProductDetail = () => {
         const productDocRef = doc(db, 'books', itemId)
         const productDocSnap = await getDoc(productDocRef)
 
+        const statusDocRef = doc(db, 'books', itemId, 'buyerInfo', itemId)
+        const statusDocRefSnap = await getDoc(statusDocRef)
+
+        if (statusDocRefSnap.exists()) {
+          const buyerData = statusDocRefSnap.data()
+          setIsSold(true)
+
+          if (buyerData.buyerId === currentUser) {
+            setIsBuyer(true)
+          }
+        }
+
         if (productDocSnap.exists()) {
           const data = productDocSnap.data()
           setProductData(data)
@@ -41,6 +59,11 @@ const ProductDetail = () => {
             data.bookImageUrl.length > 0
           ) {
             setSelectedImage(data.bookImageUrl[0])
+          }
+
+          if (data.userId === currentUser) {
+            setIsOwner(true)
+            console.log('出品者です')
           }
 
           if (data.userId) {
@@ -62,7 +85,7 @@ const ProductDetail = () => {
     if (itemId) {
       fetchData()
     }
-  }, [itemId])
+  }, [itemId, currentUser])
 
   if (isLoading) {
     return <Loading />
@@ -79,7 +102,7 @@ const ProductDetail = () => {
   }))
 
   // 購入手続きボタンを押したときの処理
-  const handlebuyButton = async () => {
+  const handleBuyButton = async () => {
     try {
       const buyerInfoRef = doc(db, 'books', itemId, 'buyerInfo', itemId)
       const buyerData = {
@@ -92,6 +115,46 @@ const ProductDetail = () => {
     }
     navigate(`/transaction/${itemId}`)
   }
+
+  const getButtonProps = () => {
+    // 購入済み状態かつ現在のログインユーザーが購入者の場合
+    if (isSold && isBuyer) {
+      return {
+        text: '取引画面を表示する',
+        style: styles.purchaseButton,
+        onClick: () => navigate(`/transaction/${itemId}`),
+        disabled: false,
+      }
+    }
+    // 出品者の場合
+    else if (isOwner) {
+      return {
+        text: '取引画面を表示する',
+        style: styles.ownerButton,
+        onClick: () => navigate(`/transaction/${itemId}`),
+        disabled: false,
+      }
+    }
+    // 商品は売れているが、現在のユーザーは購入者ではない
+    else if (isSold) {
+      return {
+        text: 'SOLD OUT',
+        style: styles.soldButton,
+        disabled: true,
+      }
+    }
+    // 未購入状態
+    else {
+      return {
+        text: '購入手続きへ',
+        style: styles.purchaseButton,
+        onClick: handleBuyButton,
+        disabled: false,
+      }
+    }
+  }
+
+  const buttonProps = getButtonProps()
 
   return (
     <div className={styles.imageAndInfoContainer}>
@@ -109,7 +172,7 @@ const ProductDetail = () => {
         </div>
 
         <img
-          src={selectedImage}
+          src={selectedImage || noImg}
           alt="選択された商品画像"
           className={styles.mainImage}
         />
@@ -122,8 +185,12 @@ const ProductDetail = () => {
               <button className={styles.actionButton}>💙いいね</button>
               <button className={styles.actionButton}>💬メッセージ</button>
             </div>
-            <Button className={styles.purchaseButton} onClick={handlebuyButton}>
-              購入手続きへ
+            <Button
+              className={buttonProps.style}
+              onClick={buttonProps.onClick}
+              disabled={buttonProps.disabled}
+            >
+              {buttonProps.text}
             </Button>
           </div>
           <h3>商品の説明</h3>
@@ -132,8 +199,8 @@ const ProductDetail = () => {
           <p>{productData?.itemCondition || '不明'}</p>
           <h3>出品者</h3>
           <div className={styles.user_information}>
-            <img src={userData.profileImage} alt="ユーザー画像" />
-            <p>{userData?.name || 'Unknown User'}</p>
+            <img src={userData?.profileImage || noImg} alt="ユーザー画像" />
+            <p>{userData?.name}</p>
           </div>
         </div>
       </div>
